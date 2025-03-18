@@ -1,4 +1,4 @@
-# **Biffleball Backend**
+# **Biffleball**
 
 ## **[Deployed Site]()**
 🚀 Created by James Fleming  
@@ -13,7 +13,9 @@
 ## **Description**  
 Biffleball is a competitive game where participants select a different Major League Baseball (MLB) team each week. The objective is to pick the team that will win the most games that week. Players accumulate wins over the season, competing for the highest score, bragging rights, and potential prizes.  
 
-This backend powers the Biffleball platform, providing API endpoints for user authentication, team selections, standings, and game logic.
+The backend powers the Biffleball platform, providing API endpoints for user authentication, team selections, standings, and game logic.
+
+The frontend powers the user interface and design, giving users the access to play the game they love. 
 
 📄 **[Design Document](https://docs.google.com/document/d/1wPYQMhZh-s0pEfC0loNywkKwJXTcIeEaepYe4GjCClA/edit?usp=sharing)**  
 
