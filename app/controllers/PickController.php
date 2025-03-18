@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/Pick.php';
 require_once __DIR__ . '/../models/Team.php';
-session_start();
 
 class PickController {
     public static function makePick() {
