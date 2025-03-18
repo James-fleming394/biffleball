@@ -2,6 +2,7 @@
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/StandingsController.php';
 require_once 'app/controllers/PickController.php';
+require_once 'app/controllers/APIController.php';
 
 session_start();
 
@@ -33,6 +34,9 @@ switch ($page) {
             exit();
         }
         PickController::showPicks();
+        break;
+    case 'update-wins':
+        ApiController::updateTeamWins();
         break;
     default:
         include 'app/views/home.php';
