@@ -74,7 +74,7 @@ The API will now be accessible at **[http://localhost:8000](http://localhost:800
 
 ## **Progress**  
 ✅ **Design Document Completed**  
-✅ **Backend Setup**  
+🔲 **Backend Setup**  
 🔲 **Database Design in Progress**  
 
 ---
