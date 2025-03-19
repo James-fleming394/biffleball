@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
+session_start();
 
 class UserController {
     public static function register() {

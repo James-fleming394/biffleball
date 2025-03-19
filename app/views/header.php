@@ -14,6 +14,7 @@
     <a href="index.php">Home</a>
     <a href="index.php?page=standings">Standings</a>
     <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="index.php?page=pick-team">Submit Pick</a>
         <a href="index.php?page=profile">My Profile</a>
         <a href="index.php?page=logout">Logout</a>
     <?php else: ?>

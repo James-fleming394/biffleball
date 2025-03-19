@@ -4,6 +4,11 @@ require_once __DIR__ . '/controllers/StandingsController.php';
 require_once __DIR__ . '/controllers/PickController.php';
 require_once __DIR__ . '/controllers/ApiController.php';
 
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Get the requested page or default to 'home'
 $page = $_GET['page'] ?? 'home';
 
@@ -52,9 +57,17 @@ switch ($page) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             PickController::makePick();
         } else {
-            $teams = Team::getAll();
-            $picks = Pick::getUserPicks($_SESSION['user_id']);
-            include __DIR__ . '/views/pick.php';
+            PickController::showPicks();
+        }
+        break;
+
+    case 'change-pick':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /index.php?page=login");
+            exit();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            PickController::changePick();
         }
         break;
 
@@ -67,3 +80,4 @@ switch ($page) {
         break;
 }
 ?>
+
