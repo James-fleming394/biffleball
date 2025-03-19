@@ -15,20 +15,16 @@ class Pick {
 
         // Insert the pick into the database
         $stmt = $pdo->prepare("INSERT INTO picks (user_id, team_id, week) VALUES (?, ?, ?)");
-        if ($stmt->execute([$userId, $teamId, $week])) {
-            return true;
-        } else {
-            return "Database insert error: " . implode(" - ", $stmt->errorInfo());
-        }
+        return $stmt->execute([$userId, $teamId, $week]);
     }
 
     public static function getUserPicks($userId) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name 
-            FROM picks 
-            JOIN teams ON picks.team_id = teams.id 
-            WHERE picks.user_id = ? 
-            ORDER BY picks.week DESC");
+                               FROM picks 
+                               JOIN teams ON picks.team_id = teams.id 
+                               WHERE picks.user_id = ? 
+                               ORDER BY picks.week DESC");
         $stmt->execute([$userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -38,8 +34,8 @@ class Pick {
         $week = date('W'); // Get current week
 
         $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
-                JOIN teams ON picks.team_id = teams.id 
-            WHERE picks.user_id = ? AND picks.week = ?");
+                               JOIN teams ON picks.team_id = teams.id 
+                               WHERE picks.user_id = ? AND picks.week = ?");
         $stmt->execute([$userId, $week]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -49,8 +45,8 @@ class Pick {
         $week = date('W') + 1; // Next week
 
         $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
-        JOIN teams ON picks.team_id = teams.id 
-        WHERE picks.user_id = ? AND picks.week = ?");
+                               JOIN teams ON picks.team_id = teams.id 
+                               WHERE picks.user_id = ? AND picks.week = ?");
         $stmt->execute([$userId, $week]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -58,9 +54,13 @@ class Pick {
     public static function changePick($userId, $newTeamId, $week) {
         global $pdo;
 
-        // Only allow changes if it's before Monday (week start)
-        if (date('N') > 1) { // 1 = Monday
-            return false; // Cannot change pick after the week starts
+        // Get current day and time
+        $currentDay = date('N'); // 1 (Monday) - 7 (Sunday)
+        $currentTime = date('H'); // Hour in 24-hour format
+
+        // Only allow changes before 9PM (21:00) on Sunday (day 7)
+        if ($currentDay == 7 && $currentTime >= 21) { 
+            return false; // Cannot change pick after 9PM Sunday
         }
 
         $stmt = $pdo->prepare("UPDATE picks SET team_id = ? WHERE user_id = ? AND week = ?");
