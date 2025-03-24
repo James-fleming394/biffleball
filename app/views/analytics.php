@@ -14,7 +14,18 @@
 
 <section>
     <h3>Strength of Teams Used (SOTU)</h3>
-    
+    <table border="1" cellpadding="8" cellspacing="0" style="margin: auto;">
+        <tr>
+            <th>Username</th>
+            <th>SOTU (Avg. Team Wins)</th>
+        </tr>
+        <?php foreach ($sotuStats as $row): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['username']); ?></td>
+                <td><?php echo $row['sotu']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 </section>
 
 <section>
@@ -47,7 +58,7 @@
 
 <section>
     <h3>Teams Used by Individuals</h3>
-    
+
 </section>
 
 <?php include 'footer.php'; ?>
