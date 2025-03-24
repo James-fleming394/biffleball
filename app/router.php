@@ -45,9 +45,9 @@ switch ($page) {
         break;
 
     case 'standings':
-        $rankings = Standings::getRankings();
-        include __DIR__ . '/views/standings.php';
+        StandingsController::index();
         break;
+        
 
     case 'pick-team':
         if (!isset($_SESSION['user_id'])) {
