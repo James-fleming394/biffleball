@@ -11,6 +11,9 @@
         }
 
         nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -18,7 +21,7 @@
             padding: 10px 20px;
             height: 60px;
             overflow: hidden;
-            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .logo-container {
