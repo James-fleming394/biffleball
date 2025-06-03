@@ -3,8 +3,12 @@
 <head>
     <title>Biffleball</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
 
         nav {
             display: flex;
@@ -14,6 +18,7 @@
             padding: 10px 20px;
             height: 60px;
             overflow: hidden;
+            position: relative;
         }
 
         .logo-container {
@@ -25,26 +30,57 @@
         .logo-container img {
             height: 200px;
             margin-bottom: 25px;
-            transform: scale(0.6); 
+            transform: scale(0.6);
             transform-origin: left center;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 30px;
+            position: relative;
         }
 
         .nav-links a {
-            color: white;
+            position: relative;
+            color: #f6f4e6;
             text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.3s;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
         }
 
         .nav-links a:hover {
-            opacity: 0.8;
+            color: #fddb3a;
         }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ffffff;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+}
+
+        .nav-links a:nth-child(1):hover ~ .dot { transform: translateX(0); opacity: 1; }
+        .nav-links a:nth-child(2):hover ~ .dot { transform: translateX(100px); opacity: 1; }
+        .nav-links a:nth-child(3):hover ~ .dot { transform: translateX(200px); opacity: 1; }
+        .nav-links a:nth-child(4):hover ~ .dot { transform: translateX(300px); opacity: 1; }
+        .nav-links a:nth-child(5):hover ~ .dot { transform: translateX(400px); opacity: 1; }
+        .nav-links a:nth-child(6):hover ~ .dot { transform: translateX(500px); opacity: 1; }
+        .nav-links a:nth-child(7):hover ~ .dot { transform: translateX(600px); opacity: 1; }
+        .nav-links a:nth-child(8):hover ~ .dot { transform: translateX(700px); opacity: 1; }
+
     </style>
 </head>
 <body>
@@ -67,5 +103,6 @@
             <a href="index.php?page=login">Login</a>
             <a href="index.php?page=register">Register</a>
         <?php endif; ?>
+        <span class="dot"></span>
     </div>
 </nav>
