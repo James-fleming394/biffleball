@@ -28,10 +28,11 @@
         }
 
         .logo-container img {
-            height: 200px;
-            margin-bottom: 25px;
+            height: 250px;
+            margin-bottom: 30px;
             transform: scale(0.6);
             transform-origin: left center;
+            filter: brightness(0) invert(1);
         }
 
         .nav-links {
