@@ -281,15 +281,15 @@
     <div class="about-boxes">
         <div class="about-box">
             <h3>What is BiffleBall?</h3>
-            <p>BiffleBall is a Survivor-Pool style competition for MLB fans...</p>
+            <p>BiffleBall is a Survivor-Pool style competition for MLB fans. With 162 games, it’s easy to lose interest — BiffleBall keeps fans engaged all season long by creating a weekly rooting interest no matter your favorite team’s record.</p>
         </div>
         <div class="about-box">
             <h3>How Do I Play?</h3>
-            <p>Pick one MLB team each week (Mon–Sun). Earn 1 point...</p>
+            <p>Pick one MLB team each week (Mon–Sun). Earn 1 point for each win your team gets. You can’t pick the same team twice. Most total wins at season’s end wins the prestigious BiffleBall Belt.</p>
         </div>
         <div class="about-box">
             <h3>Strategy</h3>
-            <p>Choose teams with 7-game weeks? Go with Vegas favorites?... </p>
+            <p>Choose teams with 7-game weeks? Go with Vegas favorites? Ride a hot streak or avoid bad weather? There’s no single path to victory. Plan wisely and outlast the rest. </p>
         </div>
     </div>
 </div>
