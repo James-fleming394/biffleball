@@ -120,7 +120,6 @@
     /* About Section */
     .button-group {
         margin-top: 30px;
-        padding: 20px;
     }
 
     a.button {
@@ -245,6 +244,27 @@
         background-color: #404EED;
         transform: scale(1.1);
     }
+
+    .welcome-back h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        color: #0074D9;
+    }
+
+    .social-section h3 {
+        font-size: 1.5em;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        color: #0074D9;
+    }
+    
+    .button-group,
+    .welcome-back,
+    .social-section {
+        text-align: center;
+        width: 100%;
+    }
+
 </style>
 
 <section id="hero">
@@ -291,11 +311,13 @@
         <a class="button" href="index.php?page=register">Register Now</a>
         <a class="button" href="index.php?page=login">Log In</a>
     <?php else: ?>
-        <h3>Welcome Back <?= isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '' ?>!</h3>
-        <a class="button" href="index.php?page=standings">View Standings</a>
-        <a class="button" href="index.php?page=analytics">Analytics</a>
-        <a class="button" href="index.php?page=profile">My Profile</a>
-        <a class="button" href="index.php?page=picks">Submit Pick</a>
+        <div class="welcome-back">
+            <h3>Welcome Back <?= isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '' ?>!</h3>
+            <a class="button" href="index.php?page=standings">View Standings</a>
+            <a class="button" href="index.php?page=analytics">Analytics</a>
+            <a class="button" href="index.php?page=profile">My Profile</a>
+            <a class="button" href="index.php?page=picks">Submit Pick</a>
+        </div>
     <?php endif; ?>
 </div>
 
@@ -310,5 +332,6 @@
         </a>
     </div>
 </div>
+
 
 <?php include 'footer.php'; ?>
