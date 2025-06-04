@@ -4,14 +4,14 @@
 <style>
     /* Hero Section */
     #hero {
-        padding: 4rem 1rem 2rem; 
+        padding: 7rem 1rem 2rem;
         overflow: hidden;
         position: relative;
-        z-index: 10;
+        background-color: #000;
+        z-index: 1;
     }
 
     #hero .cs-container {
-        width: 100%;
         max-width: 80rem;
         margin: auto;
         display: flex;
@@ -21,6 +21,8 @@
         gap: 3rem;
         flex-wrap: wrap;
         padding: 0 1rem;
+        position: relative;
+        z-index: 2;
     }
 
     #hero .cs-content {
@@ -30,8 +32,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        position: relative;
-        z-index: 10;
     }
 
     #hero .cs-title {
@@ -39,15 +39,14 @@
         font-weight: 900;
         text-transform: uppercase;
         line-height: 1.2em;
-        margin: 0 0 1rem;
+        margin-bottom: 1rem;
         color: white;
     }
 
     #hero .cs-text {
         font-size: clamp(1rem, 2.5vw, 1.25rem);
         line-height: 1.5em;
-        max-width: 43.75rem;
-        margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+        margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
         color: white;
         opacity: 0.9;
     }
@@ -62,11 +61,9 @@
         display: inline-flex;
         align-items: center;
         gap: 0.75rem;
-        position: relative;
-        z-index: 1;
-        transition: background 0.3s ease;
-        text-decoration: none;
         border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.3s ease;
     }
 
     #hero .cs-button-solid:hover {
@@ -82,32 +79,32 @@
         width: 100%;
         max-width: clamp(26rem, 50vw, 36rem);
         display: flex;
-        align-items: flex-end;
-        z-index: 7;
+        justify-content: center;
+        position: relative;
+        height: 300px;
     }
 
     #hero .cs-picture img {
+        position: relative;
+        bottom: 0;
         width: 100%;
         height: auto;
-        margin-bottom: -32px;   
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    #hero .cs-picture img.active {
+        opacity: 1;
+        z-index: 3;
     }
 
     #hero .cs-image-group {
-        width: 100%;
-        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
-        overflow: hidden;
-        z-index: 1;
-    }
-
-    #hero .cs-background {
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+        z-index: 0;
     }
 
     #hero .cs-background img {
@@ -117,7 +114,6 @@
         filter: brightness(0.4);
     }
 
-    /* About Section */
     .button-group {
         margin-top: 30px;
     }
@@ -135,7 +131,7 @@
     }
 
     a.button:hover {
-        background-color:rgb(96, 169, 221);
+        background-color: rgb(96, 169, 221);
     }
 
     .about-section {
@@ -184,29 +180,9 @@
         line-height: 1.6;
     }
 
-    @media (max-width: 768px) {
-        .about-boxes {
-            flex-direction: column;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .hero h1 {
-            font-size: 2em;
-        }
-
-        .container {
-            margin: 20px;
-        }
-    }
     .socials-section {
         margin-top: 40px;
         text-align: center;
-    }
-
-    .socials-section h3 {
-        font-size: 1.5em;
-        margin-bottom: 20px;
     }
 
     .social-icons {
@@ -257,17 +233,21 @@
         margin-bottom: 20px;
         color: #0074D9;
     }
-    
+
     .button-group,
     .welcome-back,
     .social-section {
         text-align: center;
         width: 100%;
     }
-
 </style>
 
 <section id="hero">
+    <div class="cs-image-group">
+        <picture class="cs-background">
+            <img src="https://media.istockphoto.com/id/520876362/photo/baseball-stadium.jpg?s=612x612&w=0&k=20&c=BULB5RCcGEV0_Ho6CFX8VksLep_OhC6YwKYRdgt2rYc=" alt="Baseball Stadium Background">
+        </picture>
+    </div>
     <div class="cs-container">
         <div class="cs-content">
             <h1 class="cs-title">BiffleBall</h1>
@@ -277,31 +257,39 @@
                 <img class="cs-button-arrow" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/white-arrow-up.svg" alt="arrow" />
             </a>
         </div>
-        <picture class="cs-picture">
-            <img src="https://pngimg.com/d/baseball_PNG19028.png" alt="Baseball Icon">
-        </picture>
-    </div>
-    <div class="cs-image-group">
-        <picture class="cs-background">
-            <img src="https://media.istockphoto.com/id/520876362/photo/baseball-stadium.jpg?s=612x612&w=0&k=20&c=BULB5RCcGEV0_Ho6CFX8VksLep_OhC6YwKYRdgt2rYc=" alt="Baseball Stadium">
-        </picture>
+        <div class="cs-picture">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19066.png" class="active" alt="Ball 1">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19000.png" alt="Ball 2">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19001.png" alt="Ball 3">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19054.png" alt="Ball 4">
+        </div>
     </div>
 </section>
+
+<script>
+    const imgs = document.querySelectorAll(".cs-picture img");
+    let current = 0;
+    setInterval(() => {
+        imgs[current].classList.remove("active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("active");
+    }, 4000);
+</script>
 
 <div class="about-section">
     <h2>About BiffleBall</h2>
     <div class="about-boxes">
         <div class="about-box">
             <h3>What is BiffleBall?</h3>
-            <p>BiffleBall is a Survivor-Pool style competition for MLB fans. With 162 games, it’s easy to lose interest — BiffleBall keeps fans engaged all season long by creating a weekly rooting interest no matter your favorite team’s record.</p>
+            <p>BiffleBall is a Survivor-Pool style competition for MLB fans...</p>
         </div>
         <div class="about-box">
             <h3>How Do I Play?</h3>
-            <p>Pick one MLB team each week (Mon–Sun). Earn 1 point for each win your team gets. You can’t pick the same team twice. Most total wins at season’s end wins the prestigious BiffleBall Belt.</p>
+            <p>Pick one MLB team each week (Mon–Sun). Earn 1 point...</p>
         </div>
         <div class="about-box">
             <h3>Strategy</h3>
-            <p>Choose teams with 7-game weeks? Go with Vegas favorites? Ride a hot streak or avoid bad weather? There’s no single path to victory. Plan wisely and outlast the rest.</p>
+            <p>Choose teams with 7-game weeks? Go with Vegas favorites?... </p>
         </div>
     </div>
 </div>
@@ -332,6 +320,5 @@
         </a>
     </div>
 </div>
-
 
 <?php include 'footer.php'; ?>
