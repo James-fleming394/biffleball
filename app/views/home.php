@@ -82,6 +82,7 @@
         justify-content: center;
         position: relative;
         height: 300px;
+        transform: translateX(-10%); 
     }
 
     #hero .cs-picture img {
@@ -258,10 +259,9 @@
             </a>
         </div>
         <div class="cs-picture">
-            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19066.png" class="active" alt="Ball 1">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19054.png" class="active" alt="Ball 1">
             <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19000.png" alt="Ball 2">
             <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19001.png" alt="Ball 3">
-            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19054.png" alt="Ball 4">
         </div>
     </div>
 </section>
