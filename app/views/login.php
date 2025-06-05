@@ -116,6 +116,23 @@ button[type="submit"]:hover {
     background-color: #005fa3;
 }
 
+.forgot-password {
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+.forgot-password a {
+    font-size: 0.9rem;
+    color: #0074D9;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+    color: #005fa3;
+}
+
+
 @media (max-width: 768px) {
     .login-wrapper {
         flex-direction: column;
@@ -145,7 +162,11 @@ button[type="submit"]:hover {
             </div>
             <button type="submit">Login</button>
         </form>
+        <div class="forgot-password">
+            <a href="index.php?page=forgot-password">Forgot password?</a>
+        </div>
     </div>
+
     <div class="logo-box">
         <img src="/images/BiffleballSmallLogo.png" alt="BiffleBall Logo">
     </div>
