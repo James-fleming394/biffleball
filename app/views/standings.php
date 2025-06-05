@@ -61,6 +61,15 @@
     vertical-align: middle;
 }
 
+.profile-link {
+    color: #0074D9;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.profile-link:hover {
+    text-decoration: underline;
+}
 
 @media (max-width: 768px) {
     .standings-section {
