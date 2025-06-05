@@ -167,6 +167,154 @@
         line-height: 1.5;
     }
 
+    /* Leaderboard Section */
+    .leaderboard {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 3rem;
+        max-width: 1100px;
+        margin: 80px auto;
+        padding: 0 20px;
+    }
+
+    .leaderboard-column {   
+        flex: 1 1 45%;
+        background-color: #f5f5f5;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .leaderboard-column h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #0074D9;
+    }
+
+    .leaderboard-table {    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    .leaderboard-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.1rem;
+        padding: 8px 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .leaderboard-row.header {
+        font-weight: bold;
+        color: #555;
+        border-bottom: 2px solid #0074D9;
+    }
+
+    .leaderboard-cta {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #0074D9;
+        color: white;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .leaderboard-cta:hover {
+        background-color: #005fa3;
+    }
+
+    /* Responsive layout for smaller screens */
+    @media (max-width: 768px) {
+        .newsletter-leaderboard {
+            flex-direction: column;
+        }
+
+        .newsletter-column,
+        .leaderboard-column {
+            flex: 1 1 100%;
+        }
+    }
+
+    .secondary-cta {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #fddb3a;
+        color: #000;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+    .secondary-cta:hover {
+        background-color: #e6c72e;
+    }
+
+    .weekly-recap {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+    }
+
+    .weekly-recap h4 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+        color: #0074D9;
+    }
+
+    .bar-chart {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+    }
+
+    .bar .label {
+        width: 80px;
+        font-weight: 600;
+        font-size: 0.95em;
+        white-space: nowrap;
+    }
+
+    .team-logo {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        margin-right: 6px;
+    }
+
+    .bar .bar-fill {
+        height: 24px;
+        background-color: #0074D9;
+        color: white;
+        font-size: 0.85em;
+        line-height: 24px;
+        text-align: right;
+        padding-right: 8px;
+        border-radius: 4px;
+        min-width: 2%;
+        width: 0;
+        transition: width 1s ease-out;
+    }
+
+    .bar .bar-fill.low {
+        background-color: #d94e4e;
+    }
+
+
     /* Social Section */
     .socials-section {
         margin-top: 40px;
@@ -283,6 +431,90 @@
         </div>
     </div>
 </section>
+
+<section class="leaderboard">
+    <div class="leaderboard-column">
+        <h2>🔥 Top Players This Week</h2>
+        <div class="leaderboard-table">
+            <div class="leaderboard-row header">
+                <span>Rank</span>
+                <span>Username</span>
+                <span>Wins</span>
+            </div>
+            <div class="leaderboard-row">
+                <span>🥇</span>
+                <span>MLBKing42</span>
+                <span>8</span>
+            </div>
+            <div class="leaderboard-row">
+                <span>🥈</span>
+                <span>ClutchCall</span>
+                <span>7</span>
+            </div>
+            <div class="leaderboard-row">
+                <span>🥉</span>
+                <span>FastballFan</span>
+                <span>7</span>
+            </div>
+        </div>
+        <a class="button leaderboard-cta" href="index.php?page=register">Think you can beat them? →</a>
+
+        <a class="button secondary-cta" href="index.php?page=standings">See Full Standings →</a>
+
+    <div class="weekly-recap">
+        <h4>This Week's Picks</h4>
+    <div class="bar-chart">
+        <div class="bar" data-width="25">
+            <img class="team-logo" src="/images/logos/dodgers.png" alt="Dodgers logo">
+            <span class="label">Dodgers</span>
+            <div class="bar-fill">25%</div>
+        </div>
+        <div class="bar" data-width="18">
+            <img class="team-logo" src="/images/logos/yankees.png" alt="Yankees logo">
+            <span class="label">Yankees</span>
+            <div class="bar-fill">18%</div>
+        </div>
+        <div class="bar" data-width="15">
+            <img class="team-logo" src="/images/logos/braves.png" alt="Braves logo">
+            <span class="label">Braves</span>
+            <div class="bar-fill">15%</div>
+        </div>
+        <div class="bar" data-width="10">
+            <img class="team-logo" src="/images/logos/rays.png" alt="Rays logo">
+            <span class="label">Rays</span>
+            <div class="bar-fill">10%</div>
+        </div>
+        <div class="bar low" data-width="2">
+            <img class="team-logo" src="/images/logos/as.png" alt="A's logo">
+            <span class="label">A’s</span>
+            <div class="bar-fill">2%</div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const bars = document.querySelectorAll('.bar');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const fill = bar.querySelector('.bar-fill');
+                const width = bar.getAttribute('data-width');
+                fill.style.width = width + '%';
+                observer.unobserve(bar);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    bars.forEach(bar => observer.observe(bar));
+});
+</script>
+
 
 <div class="social-section">
     <h3>Socials</h3>
