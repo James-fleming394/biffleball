@@ -485,7 +485,7 @@
             <div class="bar-fill">10%</div>
         </div>
         <div class="bar low" data-width="2">
-            <img class="team-logo" src="/images/logos/as.png" alt="A's logo">
+            <img class="team-logo" src="/images/logos/As.png" alt="A's logo">
             <span class="label">A’s</span>
             <div class="bar-fill">2%</div>
         </div>
