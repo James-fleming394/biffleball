@@ -115,70 +115,85 @@
         filter: brightness(0.4);
     }
 
+    /* How it Works Section */
+    .how-it-works {
+        padding: 20px 20px;
+        padding-bottom: 60px;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+
+    .how-it-works h2 {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+        color: #0074D9;
+        text-transform: uppercase;
+    }
+
+    .steps {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .step {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 280px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .step:hover {
+        transform: translateY(-10px);
+        cursor: pointer;
+    }
+
+    .step .icon {
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+
+    .step h3 {
+        font-size: 1.25em;
+        color: #0074D9;
+        margin-bottom: 10px;
+    }
+
+    .step p {
+        font-size: 0.95em;
+        line-height: 1.5;
+    }
+
     .button-group {
         margin-top: 30px;
     }
 
-    a.button {
+    .button {
         display: inline-block;
-        padding: 12px 25px;
-        background-color: #005fa3;
+        padding: 10px 20px;
+        background-color: #0074D9;
         color: white;
         text-decoration: none;
-        border-radius: 25px;
-        font-weight: bold;
-        margin: 10px;
-        transition: background 0.3s ease;
+        border-radius: 5px;
+        font-size: 1.2em;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .button:hover {
+        background-color: #005fa3;
+        transform: scale(1.05);
     }
 
-    a.button:hover {
-        background-color: rgb(96, 169, 221);
-    }
-
-    .about-section {
-        max-width: 1100px;
-        margin: 60px auto;
-        padding: 20px;
+    .welcome-back {
+        margin-top: 20px;
         text-align: center;
     }
-
-    .about-section h2 {
-        font-size: 2.5em;
-        margin-bottom: 30px;
-    }
-
-    .about-boxes {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-    }
-
-    .about-box {
-        flex: 1 1 30%;
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-        min-width: 250px;
-    }
-
-    .about-box:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-        background-color: #f9f9f9;
-    }
-
-    .about-box h3 {
+    .welcome-back h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
         color: #0074D9;
-        margin-bottom: 15px;
-    }
-
-    .about-box p {
-        font-size: 0.95em;
-        line-height: 1.6;
     }
 
     .socials-section {
@@ -276,23 +291,26 @@
     }, 4000);
 </script>
 
-<div class="about-section">
-    <h2>About BiffleBall</h2>
-    <div class="about-boxes">
-        <div class="about-box">
-            <h3>What is BiffleBall?</h3>
-            <p>BiffleBall is a Survivor-Pool style competition for MLB fans. With 162 games, it’s easy to lose interest — BiffleBall keeps fans engaged all season long by creating a weekly rooting interest no matter your favorite team’s record.</p>
+<section class="how-it-works">
+    <h2>Get in the Game</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="icon">🧢</div>
+            <h3>Pick a Team Each Week</h3>
+            <p>Choose one MLB team to ride with from Monday to Sunday. Just don’t pick the same team twice!</p>
         </div>
-        <div class="about-box">
-            <h3>How Do I Play?</h3>
-            <p>Pick one MLB team each week (Mon–Sun). Earn 1 point for each win your team gets. You can’t pick the same team twice. Most total wins at season’s end wins the prestigious BiffleBall Belt.</p>
+        <div class="step">
+            <div class="icon">✅</div>
+            <h3>Get 1 Point Per Win</h3>
+            <p>Every win that week earns you a point. Easy to track, fun to follow.</p>
         </div>
-        <div class="about-box">
-            <h3>Strategy</h3>
-            <p>Choose teams with 7-game weeks? Go with Vegas favorites? Ride a hot streak or avoid bad weather? There’s no single path to victory. Plan wisely and outlast the rest. </p>
+        <div class="step">
+            <div class="icon">🏆</div>
+            <h3>Win the Season</h3>
+            <p>Rack up the most points and win bragging rights—and the BiffleBall Belt.</p>
         </div>
     </div>
-</div>
+</section>
 
 <div class="button-group">
     <?php if (!isset($_SESSION['user_id'])): ?>
