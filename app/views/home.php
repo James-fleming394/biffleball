@@ -117,6 +117,11 @@
         z-index: 0;
     }
 
+    #hero .cs-picture img:first-child {
+        transition-delay: 0.2s; /* same as .cs-title */
+    }
+
+
     #hero .cs-background img {
         width: 100%;
         height: 100%;
@@ -581,7 +586,7 @@
             </a>
         </div>
         <div class="cs-picture">
-            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19054.png" class="active" alt="Ball 1">
+            <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19054.png" alt="Ball 1">
             <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19000.png" alt="Ball 2">
             <img src="https://pngimg.com/uploads/baseball/small/baseball_PNG19001.png" alt="Ball 3">
         </div>
@@ -601,12 +606,15 @@
     const title = document.querySelector("#hero .cs-title");
     const text = document.querySelector("#hero .cs-text");
     const button = document.querySelector("#hero .cs-button-solid");
+    const firstImg = document.querySelector(".cs-picture img");
 
-    // Staggered entrance
+    // Staggered content
     setTimeout(() => title.classList.add("animate-in"), 100);
     setTimeout(() => text.classList.add("animate-in"), 400);
     setTimeout(() => button.classList.add("animate-in"), 700);
-    });
+    setTimeout(() => firstImg.classList.add("active"), 200); // Fade in image
+});
+
 </script>
 
 <section class="how-it-works">
