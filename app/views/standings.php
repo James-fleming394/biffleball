@@ -9,6 +9,7 @@
                 <th>Rank</th>
                 <th>Username</th>
                 <th>Total Wins</th>
+                <th>WAA</th>
                 <th>SOTU</th>
                 <th>Team This Week</th>
             </tr>
@@ -26,8 +27,9 @@
                         ?>
                     </td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
-                    <td>0</td> <!-- Placeholder -->
-                    <td>0</td> <!-- Placeholder -->
+                    <td>0</td> <!-- Placeholder for Total Wins -->
+                    <td>—</td> <!-- Placeholder for WAA -->
+                    <td>0</td> <!-- Placeholder for SOTU -->
                     <td><?php echo $user['current_team'] ?? '—'; ?></td>
                 </tr>
             <?php $rank++; endforeach; ?>
