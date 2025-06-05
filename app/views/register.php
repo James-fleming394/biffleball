@@ -8,6 +8,8 @@
     min-height: 100vh;
     padding: 2rem;
     gap: 2rem;
+    padding: 2rem 4rem;
+    background: linear-gradient(135deg, rgb(27, 19, 183),rgb(110, 174, 246));
     background-color:rgb(27, 19, 183);
 }
 
@@ -21,7 +23,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 600px;
+    max-height: 500px;
+    max-width: 600px;
     overflow: hidden;
     position: relative;
     transition: transform 0.3s ease;
@@ -34,7 +37,7 @@
 }
 
 .logo-box img {
-    max-width: 200px;
+    max-width: 70%;
     height: auto;
     margin-top: 2rem;
     margin-bottom: auto;
@@ -43,7 +46,7 @@
 .socials {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 40px;
     margin-top: auto;
     padding-top: 2rem;
 }
@@ -55,7 +58,7 @@
 }
 
 .socials a:hover {
-    transform: scale(1.1);
+    transform: scale(1.75);
 }
 
 .register-box h2 {
@@ -70,6 +73,17 @@ form {
     gap: 1rem;
 }
 
+form input,
+form button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -82,20 +96,29 @@ input[type="password"] {
 
 .password-wrapper {
     position: relative;
+    width: 100%;
 }
 
 .password-wrapper input {
-    padding-right: 40px;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    padding-right: 2.75rem; /* Extra space for the icon */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
-.password-toggle {
+.password-wrapper .toggle-password {
     position: absolute;
-    right: 12px;
-    top: 50%;
+    top: 40%;
+    right: 0.75rem;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #555;
+    font-size: 1.2rem;
+    color: #888;
 }
+
 
 button[type="submit"] {
     padding: 12px 20px;
@@ -140,10 +163,10 @@ button[type="submit"]:hover {
         <form action="index.php?page=register" method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>
-            <div class="password-wrapper">
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-            </div>
+        <div class="password-wrapper">
+            <input type="password" name="password" placeholder="Password" id="password" required>
+            <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+        </div>
             <button type="submit">Register</button>
         </form>
     </div>
