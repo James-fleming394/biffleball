@@ -342,13 +342,19 @@
     }
 
     .testimonial-slide {
-        display: none;
-        font-size: 1.1em;
-        line-height: 1.6;
+        opacity: 0;
+        transform: translateX(40px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
     }
 
     .testimonial-slide.active {
-        display: block;
+        opacity: 1;
+        transform: translateX(0);
+        position: relative;
     }
 
     .testimonial-slide span {
@@ -622,6 +628,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </div>
 </section>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.testimonial-slide');
+
+    function showNextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    // Start by activating the first slide
+    slides[currentSlide].classList.add('active');
+
+    setInterval(showNextSlide, 5000);
+</script>
+
 
 
 
