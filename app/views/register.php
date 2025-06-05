@@ -1,17 +1,14 @@
 <?php include 'header.php'; ?>
 
 <style>
-
 .register-wrapper {
     display: flex;
     align-items: stretch;
     justify-content: center;
     min-height: 100vh;
-    padding: 2rem;
-    gap: 2rem;
     padding: 2rem 4rem;
-    background: linear-gradient(135deg, rgb(27, 19, 183),rgb(110, 174, 246));
-    background-color:rgb(27, 19, 183);
+    gap: 2rem;
+    background: linear-gradient(135deg, rgb(27, 19, 183), rgb(110, 174, 246));
     margin-bottom: -5%;
 }
 
@@ -71,6 +68,7 @@
 form {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
 }
 
@@ -78,7 +76,6 @@ form input,
 form button {
     width: 100%;
     padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -88,11 +85,7 @@ form button {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    padding: 12px 16px;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
 }
 
 .password-wrapper {
@@ -103,7 +96,7 @@ input[type="password"] {
 .password-wrapper input {
     width: 100%;
     padding: 0.75rem 1rem;
-    padding-right: 2.75rem; /* Extra space for the icon */
+    padding-right: 2.75rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -112,7 +105,7 @@ input[type="password"] {
 
 .password-wrapper .toggle-password {
     position: absolute;
-    top: 40%;
+    top: 55%;
     right: 0.75rem;
     transform: translateY(-50%);
     cursor: pointer;
@@ -120,6 +113,35 @@ input[type="password"] {
     color: #888;
 }
 
+.terms {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    font-size: 0.85rem;
+    color: black;
+    text-align: left;
+    gap: 0.5rem;
+}
+
+.terms input[type="checkbox"] {
+    transform: scale(1.1);
+    margin: 0;
+}
+
+.terms label {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.terms a {
+    color: #0074D9;
+    text-decoration: underline;
+}
+
+.terms a:hover {
+    color: rgb(4, 72, 131);
+}
 
 button[type="submit"] {
     padding: 12px 20px;
@@ -149,6 +171,7 @@ button[type="submit"]:hover {
     }
 }
 </style>
+
 <div class="register-wrapper">
     <div class="logo-box">
         <img src="/images/BiffleballSmallLogo.png" alt="BiffleBall Logo">
@@ -157,15 +180,22 @@ button[type="submit"]:hover {
             <a href="https://discord.gg/FF4Y7KxT" target="_blank"><i class="fab fa-discord"></i></a>
         </div>
     </div>
+
     <div class="register-box">
         <h2>Register</h2>
         <form action="index.php?page=register" method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>
-        <div class="password-wrapper">
-            <input type="password" name="password" placeholder="Password" id="password" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
-        </div>
+            <div class="password-wrapper">
+                <input type="password" name="password" placeholder="Password" id="password" required>
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            <div class="terms">
+                <input type="checkbox" name="terms" id="terms" required>
+                <label for="terms">
+                    I agree to the <a href="terms.php" target="_blank">Terms of Service</a>
+                </label>
+                </div>
             <button type="submit">Register</button>
         </form>
     </div>
