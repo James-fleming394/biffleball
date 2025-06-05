@@ -21,10 +21,6 @@
     </div>
     <div class="logo-box">
         <img src="/images/BiffleballSmallLogo.png" alt="BiffleBall Logo">
-        <div class="socials">
-            <a href="https://x.com/Biffle_Ball" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://discord.gg/FF4Y7KxT" target="_blank"><i class="fab fa-discord"></i></a>
-        </div>
     </div>
 </div>
 
