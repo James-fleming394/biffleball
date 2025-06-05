@@ -1,27 +1,39 @@
 <?php include 'header.php'; ?>
 
-<h2>League Standings</h2>
+<div class="standings-section">
+    <h2>🏆 League Standings</h2>
 
-<table border="1" cellpadding="8" cellspacing="0" style="margin: auto;">
-    <tr>
-        <th>Rank</th>
-        <th>Username</th>
-        <th>Total Wins</th>
-        <th>SOTU</th>
-        <th>Team This Week</th>
-    </tr>
-    <?php 
-    $rank = 1;
-    foreach ($users as $user): ?>
-        <tr>
-            <td><?php echo $rank++; ?></td>
-            <td><?php echo htmlspecialchars($user['username']); ?></td>
-            <td>0</td> <!-- Static until wins are tracked -->
-            <td>0</td> <!-- Static until SOTU is implemented -->
-            <td><?php echo $user['current_team'] ?? '—'; ?></td>
-        </tr>
-    <?php endforeach; ?>
-</table>
+    <table class="standings-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Total Wins</th>
+                <th>SOTU</th>
+                <th>Team This Week</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $rank = 1;
+            foreach ($users as $user): 
+                $rowClass = $rank === 1 ? 'top1' : ($rank === 2 ? 'top2' : ($rank === 3 ? 'top3' : ''));
+            ?>
+                <tr class="<?php echo $rowClass; ?>">
+                    <td>
+                        <?php 
+                        echo $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : ($rank === 3 ? '🥉' : $rank));
+                        ?>
+                    </td>
+                    <td><?php echo htmlspecialchars($user['username']); ?></td>
+                    <td>0</td> <!-- Placeholder -->
+                    <td>0</td> <!-- Placeholder -->
+                    <td><?php echo $user['current_team'] ?? '—'; ?></td>
+                </tr>
+            <?php $rank++; endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
 <?php include 'footer.php'; ?>
 
