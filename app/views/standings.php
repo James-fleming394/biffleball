@@ -40,10 +40,6 @@
     background-color: #f2f2f2;
 }
 
-.standings-table tr:hover {
-    background-color: #e8f4ff;
-}
-
 .top1 td {
     background-color: #ffeaa7 !important;
     font-weight: bold;
@@ -92,6 +88,7 @@
                 <th>WAA</th>
                 <th>SOTU</th>
                 <th>Team This Week</th>
+                <th>Profile</th>
             </tr>
         </thead>
         <tbody>
@@ -124,6 +121,11 @@
                             echo '—';
                         }
                         ?>
+                    </td>
+                    <td>
+                        <a href="index.php?page=profile&user=<?php echo urlencode($user['username']); ?>" class="profile-link">
+                        View
+                        </a>
                     </td>
                 </tr>
             <?php $rank++; endforeach; ?>
