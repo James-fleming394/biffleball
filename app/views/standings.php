@@ -59,6 +59,13 @@
     font-weight: bold;
 }
 
+.team-logo {
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+
 @media (max-width: 768px) {
     .standings-section {
         padding: 1rem;
@@ -103,7 +110,21 @@
                     <td>0</td> <!-- Placeholder for Total Wins -->
                     <td>—</td> <!-- Placeholder for WAA -->
                     <td>0</td> <!-- Placeholder for SOTU -->
-                    <td><?php echo $user['current_team'] ?? '—'; ?></td>
+                    <td>
+                        <?php
+                        $team = $user['current_team'] ?? '';
+                        if ($team) {
+                            $parts = explode(' ', strtolower($team));
+                            $lastPart = end($parts);
+                            $secondLastPart = prev($parts);
+                            $filename = $secondLastPart . $lastPart . '.png';
+                            $logoPath = "/images/logos/" . $filename;
+                            echo "<img src='$logoPath' alt='$team' class='team-logo'> " . htmlspecialchars($team);
+                        } else {
+                            echo '—';
+                        }
+                        ?>
+                    </td>
                 </tr>
             <?php $rank++; endforeach; ?>
         </tbody>
