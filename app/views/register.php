@@ -1,6 +1,7 @@
 <?php include 'header.php'; ?>
 
 <style>
+
 .register-wrapper {
     display: flex;
     align-items: stretch;
@@ -11,6 +12,7 @@
     padding: 2rem 4rem;
     background: linear-gradient(135deg, rgb(27, 19, 183),rgb(110, 174, 246));
     background-color:rgb(27, 19, 183);
+    margin-bottom: -5%;
 }
 
 .register-box,
@@ -27,7 +29,6 @@
     max-width: 600px;
     overflow: hidden;
     position: relative;
-    transition: transform 0.3s ease;
 }
 
 .logo-box {
@@ -148,7 +149,6 @@ button[type="submit"]:hover {
     }
 }
 </style>
-
 <div class="register-wrapper">
     <div class="logo-box">
         <img src="/images/BiffleballSmallLogo.png" alt="BiffleBall Logo">
@@ -157,7 +157,6 @@ button[type="submit"]:hover {
             <a href="https://discord.gg/FF4Y7KxT" target="_blank"><i class="fab fa-discord"></i></a>
         </div>
     </div>
-
     <div class="register-box">
         <h2>Register</h2>
         <form action="index.php?page=register" method="POST">
