@@ -4,7 +4,7 @@
 <style>
     /* Hero Section */
     #hero {
-        padding: 7rem 1rem 2rem;
+        padding: 4rem 1rem 2rem;
         overflow: hidden;
         position: relative;
         background-color: #000;
@@ -32,6 +32,8 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 2rem;
+        margin-top: -2rem;
     }
 
     #hero .cs-title {
@@ -53,11 +55,12 @@
     }
 
     #hero .cs-text {
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        font-size: clamp(1.5rem, 2.5vw, 1.25rem);
         line-height: 1.5em;
         margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
         color: white;
         opacity: 0.9;
+        margin-left: 0.25rem;
     }
 
     #hero .cs-button-solid {
@@ -613,7 +616,7 @@
     setTimeout(() => text.classList.add("animate-in"), 400);
     setTimeout(() => button.classList.add("animate-in"), 700);
     setTimeout(() => firstImg.classList.add("active"), 200); // Fade in image
-});
+    });
 
 </script>
 
