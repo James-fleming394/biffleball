@@ -554,7 +554,7 @@
         imgs[current].classList.remove("active");
         current = (current + 1) % imgs.length;
         imgs[current].classList.add("active");
-    }, 4000);
+    }, 8000);
 </script>
 
 <section class="how-it-works">
