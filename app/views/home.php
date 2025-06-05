@@ -41,6 +41,15 @@
         line-height: 1.2em;
         margin-bottom: 1rem;
         color: white;
+        animation: fadeIn 1.2s ease forwards;
+    }
+
+    #hero .highlight {
+        background: linear-gradient(90deg,rgb(255, 255, 255) 0%,rgb(255, 255, 255) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+        animation: slideIn 1s ease-out;
     }
 
     #hero .cs-text {
@@ -113,6 +122,36 @@
         height: 100%;
         object-fit: cover;
         filter: brightness(0.4);
+    }
+
+    /* Initial hidden/offset state */
+    #hero .cs-title,
+    #hero .cs-text,
+    #hero .cs-button-solid {
+        opacity: 0;
+        transform: translateY(20px);
+        }
+
+    /* Animated state (triggered via JS) */
+    #hero .cs-title.animate-in,
+    #hero .cs-text.animate-in,
+    #hero .cs-button-solid.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 0.8s ease;
+    }
+
+    /* Optional stagger effect */
+    #hero .cs-title.animate-in {
+        transition-delay: 0.2s;
+    }
+
+    #hero .cs-text.animate-in {
+        transition-delay: 0.5s;
+    }
+
+    #hero .cs-button-solid.animate-in {
+        transition-delay: 0.8s;
     }
 
     /* How it Works Section */
@@ -532,11 +571,13 @@
     </div>
     <div class="cs-container">
         <div class="cs-content">
-            <h1 class="cs-title">BiffleBall</h1>
-            <p class="cs-text">The First Baseball Survivor Pool</p>
+            <h1 class="cs-title">
+                <span class="highlight">BiffleBall</span>
+            </h1>
+            <p class="cs-text">One Win at a Time</p>
             <a href="index.php?page=register" class="cs-button-solid">
                 Get Started Today
-                <img class="cs-button-arrow" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/white-arrow-up.svg" alt="arrow" />
+            <img class="cs-button-arrow" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/white-arrow-up.svg" alt="arrow" />
             </a>
         </div>
         <div class="cs-picture">
@@ -555,6 +596,17 @@
         current = (current + 1) % imgs.length;
         imgs[current].classList.add("active");
     }, 8000);
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const title = document.querySelector("#hero .cs-title");
+    const text = document.querySelector("#hero .cs-text");
+    const button = document.querySelector("#hero .cs-button-solid");
+
+    // Staggered entrance
+    setTimeout(() => title.classList.add("animate-in"), 100);
+    setTimeout(() => text.classList.add("animate-in"), 400);
+    setTimeout(() => button.classList.add("animate-in"), 700);
+    });
 </script>
 
 <section class="how-it-works">
