@@ -397,6 +397,69 @@
     }
 }
 
+    /* Newsletter Section */
+    .newsletter-section {
+        text-align: center;
+        padding: 60px 20px;
+        background-color: #f2f2f2;
+    }
+
+    .newsletter-btn {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        background-color: #0074D9;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .newsletter-btn:hover {
+        background-color: #005fa3;
+    }
+
+    .newsletter-modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .newsletter-modal.active {
+        display: flex;
+    }
+
+    .newsletter-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 700px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .newsletter-content img {
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px; right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
 
     /* Social Section */
     .socials-section {
