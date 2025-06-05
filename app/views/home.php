@@ -515,6 +515,38 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<section class="belt-testimonials">
+    <div class="belt-testimonials-container">
+
+    <!-- Left: Testimonials -->
+    <div class="testimonials-box">
+        <h3>🏟️ What Players Are Saying</h3>
+        <div class="testimonial-slide active">
+            <p>"BiffleBall makes the regular season fun again. I check the scores every night!"</p>
+            <span>- @DiamondDave</span>
+        </div>
+        <div class="testimonial-slide">
+            <p>"I’ve never cared more about a Tuesday game in June… I love it."</p>
+            <span>- @PickMaster7</span>
+        </div>
+        <div class="testimonial-slide">
+            <p>"Made it to the top 10 last season. This year, I’m coming for the belt."</p>
+            <span>- @SleeperPick</span>
+        </div>
+    </div>
+
+    <!-- Right: Belt Promo -->
+    <div class="belt-box">
+        <img src="/images/belt-promo.png" alt="BiffleBall Championship Belt" class="belt-image">
+            <h3>🏆 Win the Belt</h3>
+            <p>One champion. One belt. All glory.</p>
+        <a class="button leaderboard-cta" href="index.php?page=register">Start Your Run →</a>
+    </div>
+
+    </div>
+</section>
+
+
 
 <div class="social-section">
     <h3>Socials</h3>
