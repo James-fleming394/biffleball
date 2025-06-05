@@ -194,9 +194,9 @@
     }
 
     .leaderboard-table {    
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .leaderboard-row {
@@ -313,6 +313,83 @@
     .bar .bar-fill.low {
         background-color: #d94e4e;
     }
+
+    /* Belt Testimonials Section */
+    .belt-testimonials {
+        background: #f5f7fa;
+        padding: 60px 20px;
+    }
+
+    .belt-testimonials-container {
+        max-width: 1100px;
+        margin: auto;
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .testimonials-box {
+        flex: 1;
+        max-width: 500px;
+    }
+
+    .testimonials-box h3 {
+        margin-bottom: 20px;
+        font-size: 1.75em;
+        color: #0074D9;
+    }
+
+    .testimonial-slide {
+        display: none;
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+    .testimonial-slide.active {
+        display: block;
+    }
+
+    .testimonial-slide span {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+    } 
+
+    .belt-box {
+        flex: 1;
+        text-align: center;
+    }
+
+    .belt-box img {
+        max-width: 220px;
+        margin-bottom: 15px;
+    }
+
+    .belt-box h3 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+
+    .belt-box p {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+    .belt-testimonials-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .belt-box,
+    .testimonials-box {
+        max-width: 100%;
+        text-align: center;
+    }
+}
 
 
     /* Social Section */
