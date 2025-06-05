@@ -167,35 +167,7 @@
         line-height: 1.5;
     }
 
-    .button-group {
-        margin-top: 30px;
-    }
-
-    .button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #0074D9;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 1.2em;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .button:hover {
-        background-color: #005fa3;
-        transform: scale(1.05);
-    }
-
-    .welcome-back {
-        margin-top: 20px;
-        text-align: center;
-    }
-    .welcome-back h3 {
-        font-size: 1.5em;
-        margin-bottom: 20px;
-        color: #0074D9;
-    }
-
+    /* Social Section */
     .socials-section {
         margin-top: 40px;
         text-align: center;
@@ -311,21 +283,6 @@
         </div>
     </div>
 </section>
-
-<div class="button-group">
-    <?php if (!isset($_SESSION['user_id'])): ?>
-        <a class="button" href="index.php?page=register">Register Now</a>
-        <a class="button" href="index.php?page=login">Log In</a>
-    <?php else: ?>
-        <div class="welcome-back">
-            <h3>Welcome Back <?= isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : '' ?>!</h3>
-            <a class="button" href="index.php?page=standings">View Standings</a>
-            <a class="button" href="index.php?page=analytics">Analytics</a>
-            <a class="button" href="index.php?page=profile">My Profile</a>
-            <a class="button" href="index.php?page=picks">Submit Pick</a>
-        </div>
-    <?php endif; ?>
-</div>
 
 <div class="social-section">
     <h3>Socials</h3>
