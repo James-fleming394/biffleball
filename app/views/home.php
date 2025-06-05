@@ -717,10 +717,21 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="close-btn" onclick="toggleNewsletter(false)">✖</span>
         <h3>This Week’s Update</h3>
         <img src="https://media.discordapp.net/attachments/1090992614116954263/1380141530236456990/S5-Biffle-Week-11.jpg?ex=6842cc76&is=68417af6&hm=226f440dee9b6e5628d367e8d08db745328de63a56bb3e7a657abaf90e69eea0&=&format=webp&width=458&height=648" alt="Weekly Newsletter" />
-        <!-- You could replace the <img> with an iframe or HTML content if needed -->
         </div>
     </div>
 </section>
+
+<script>
+    function toggleNewsletter(show) {
+        const modal = document.getElementById('newsletter-modal');
+        if (show) {
+            modal.classList.add('active');
+        } else {
+            modal.classList.remove('active');
+        }
+    }
+</script>
+
 
 
 <div class="social-section">
