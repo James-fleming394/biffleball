@@ -109,6 +109,25 @@
 .pick-link:hover {
     background-color: #005fa3;
 }
+
+.edit-profile-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #0074D9;
+    background-color: transparent;
+    color: #0074D9;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+    background-color: #0074D9;
+    color: #fff;
+}
+
 </style>
 
 <div class="profile-container">
