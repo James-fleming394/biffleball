@@ -115,7 +115,7 @@
     <div class="profile-header">
         <form action="upload_avatar.php" method="POST" enctype="multipart/form-data" class="avatar-form">
             <div class="avatar-container">
-                <img src="/images/avatars/default.png" alt="User Avatar" class="avatar-img" id="avatarPreview">
+                <img src="/images/avatars/<?php echo htmlspecialchars($user['avatar'] ?? 'default.png'); ?>" alt="User Avatar" class="avatar-img" id="avatarPreview">
                 <div class="avatar-overlay">Change</div>
                 <input type="file" name="avatar" id="avatarInput" accept="image/*">
             </div>
