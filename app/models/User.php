@@ -45,5 +45,11 @@ class User {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+    // Update User Avatar
+    public static function updateAvatar($id, $avatarPath) {
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE users SET avatar = ? WHERE id = ?");
+    return $stmt->execute([$avatarPath, $id]);
+}
 }
 ?>
