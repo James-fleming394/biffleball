@@ -123,6 +123,7 @@
         <div class="user-details">
             <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
             <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+            <a href="#" class="edit-profile-btn">Edit Profile Info</a>
         </div>
     </div>
 
