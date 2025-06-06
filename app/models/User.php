@@ -41,9 +41,9 @@ class User {
     // Find user by ID (for profile pages)
     public static function findById($id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT id, username, email, created_at FROM users WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT id, username, email, avatar, created_at FROM users WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+}
 }
 ?>
