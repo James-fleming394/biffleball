@@ -1,14 +1,23 @@
 <?php include 'header.php'; ?>
 
 <style>
+.standings-wrapper {
+    margin-top: 0;
+    margin-bottom: -75px;
+    padding-top: 2rem; 
+    background: linear-gradient(135deg, rgb(27, 19, 183), rgb(110, 174, 246));
+    background-color: rgb(27, 19, 183);
+    height: 100vh;
+}
+
+
 .standings-section {
-    max-width: 90%;
+    max-width: 80%;
     margin: 3rem auto;
     text-align: center;
     padding: 2rem;
     background: linear-gradient(135deg, #ffffff, #f8f9ff);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .standings-section h2 {
@@ -84,7 +93,7 @@
 }
 
 </style>
-
+<div class="standings-wrapper">
 <div class="standings-section">
     <h2>🏆 League Standings</h2>
 
@@ -140,6 +149,7 @@
             <?php $rank++; endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 
 <?php include 'footer.php'; ?>
