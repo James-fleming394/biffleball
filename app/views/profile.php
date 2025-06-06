@@ -128,6 +128,56 @@
     color: #fff;
 }
 
+.edit-mode label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.edit-mode input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.edit-mode button[type="submit"],
+.edit-mode a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 10px 18px;
+    font-size: 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.edit-mode button[type="submit"] {
+    background-color: #0074D9;
+    color: white;
+    border: none;
+    font-weight: 600;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.edit-mode button[type="submit"]:hover {
+    background-color: #005fa3;
+}
+
+.edit-mode a {
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: 500;
+    border: 1px solid #ccc;
+}
+
+.edit-mode a:hover {
+    background-color: #d5d5d5;
+}
+
 </style>
 
 <div class="profile-container">
@@ -140,10 +190,25 @@
             </div>
         </form>
         <div class="user-details">
+            <div class="view-mode">
             <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
             <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-            <a href="#" class="edit-profile-btn">Edit Profile Info</a>
+            <a href="#" class="edit-profile-btn" onclick="toggleEditForm(event)">Edit Profile Info</a>
         </div>
+        <form class="edit-mode" style="display: none;" action="index.php?page=update-user" method="POST">
+        <label>
+            Username:
+            <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
+        </label>
+        <label>
+            Email:
+            <input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+        </label>
+        <button type="submit">Save Changes</button>
+        <a href="#" onclick="toggleEditForm(event)">Cancel</a>
+    </form>
+</div>
+
     </div>
 
     <h3>My Picks</h3>
@@ -177,6 +242,14 @@ document.getElementById('avatarInput').addEventListener('change', function () {
         document.querySelector('.avatar-form').submit();
     }
 });
+
+function toggleEditForm(e) {
+    e.preventDefault();
+    const viewMode = document.querySelector('.view-mode');
+    const editMode = document.querySelector('.edit-mode');
+    viewMode.style.display = viewMode.style.display === 'none' ? 'block' : 'none';
+    editMode.style.display = editMode.style.display === 'none' ? 'block' : 'none';
+}
 </script>
 
 <?php include 'footer.php'; ?>
