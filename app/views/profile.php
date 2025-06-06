@@ -147,4 +147,16 @@
     <a href="index.php?page=pick-team" class="pick-link">Make a Pick</a>
 </div>
 
+<script>
+document.querySelector('.avatar-container').addEventListener('click', () => {
+    document.getElementById('avatarInput').click();
+});
+
+document.getElementById('avatarInput').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+        document.querySelector('.avatar-form').submit();
+    }
+});
+</script>
+
 <?php include 'footer.php'; ?>
