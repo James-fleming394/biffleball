@@ -129,7 +129,7 @@
     right: 8px;
     width: 40px;
     height: auto;
-    opacity: 0.7;
+    opacity: 0.9;
     z-index: 1;
 }
 
@@ -162,6 +162,19 @@ button:hover {
     color: #333;
     text-align: center;
 }
+
+.league-division {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #444;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
 </style>
 
 <div class="pick-container">
@@ -179,6 +192,8 @@ button:hover {
                     <div class="logo-box">
                         <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
                     </div>
+                    <?php $div = getTeamDivisionInfo($currentPick['team_name']); ?>
+                <div class="league-division"><?php echo $div['league'] . ' ' . $div['division']; ?></div>
                     <img src="/images/mlblogo.png" class="mlb-logo" alt="MLB Logo">
                 </div>
                 <div class="card-back">
