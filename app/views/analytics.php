@@ -91,14 +91,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user['username']); ?></td>
-                            <?php foreach ($teams as $team): ?>
-                                <td><?php echo $user['team_wins'][$team['abbreviation']] ?? 0; ?></td>
-                            <?php endforeach; ?>
-                        </tr>
-                    <?php endforeach; ?>
                     <tr class="summary-row">
                         <td>League Avg</td>
                         <?php foreach ($teams as $team): ?>
@@ -111,6 +103,14 @@
                             <td><?php echo $availability[$team['abbreviation']] ?? 0; ?></td>
                         <?php endforeach; ?>
                     </tr>
+                    <?php foreach ($users as $user): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                        <?php foreach ($teams as $team): ?>
+                            <td><?php echo $user['team_wins'][$team['abbreviation']] ?? 0; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

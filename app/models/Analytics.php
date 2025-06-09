@@ -72,5 +72,18 @@ class Analytics {
         'availability' => $availability
     ];
 }
+public static function getWeeklyPickDistribution($week) {
+    global $pdo;
 
+    $stmt = $pdo->prepare("
+        SELECT t.name AS team_name, COUNT(p.id) AS pick_count
+        FROM teams t
+        LEFT JOIN picks p ON t.id = p.team_id AND p.week = ?
+        GROUP BY t.id
+        HAVING pick_count > 0
+        ORDER BY pick_count DESC
+    ");
+    $stmt->execute([$week]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
