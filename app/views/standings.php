@@ -128,11 +128,19 @@
                     <td>
                         <?php
                         $team = $user['current_team'] ?? '';
+                        $customFilenames = [
+                            'red sox' => 'redsox.png',
+                            'white sox' => 'whitesox.png'
+                        ];
+
                         if ($team) {
-                            $parts = explode(' ', strtolower($team));
-                            $lastPart = end($parts);
-                            $secondLastPart = prev($parts);
-                            $filename = $secondLastPart . $lastPart . '.png';
+                            $key = strtolower($team);
+                            if (isset($customFilenames[$key])) {
+                                $filename = $customFilenames[$key];
+                            } else {
+                                $parts = explode(' ', strtolower($team));
+                                $filename = end($parts) . '.png';
+                            }
                             $logoPath = "/images/logos/" . $filename;
                             echo "<img src='$logoPath' alt='$team' class='team-logo'> " . htmlspecialchars($team);
                         } else {
