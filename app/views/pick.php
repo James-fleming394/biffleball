@@ -9,8 +9,9 @@
 
 .countdown {
     font-size: 1.25rem;
-    color: #0074D9;
+    color: rgb(255, 0, 0);
     margin-bottom: 2rem;
+    font-weight: bold;
 }
 
 .card-wrapper {
@@ -64,9 +65,9 @@
     position: absolute;
     top: 0.4rem;
     left: 0.6rem;
-    background-color:rgb(38, 39, 41);
+    background-color: rgb(38, 39, 41);
     color: white;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0.3rem 0.6rem;
     border-radius: 6px;
@@ -153,6 +154,14 @@ button {
 button:hover {
     background-color: #005fa3;
 }
+
+/* Calendar section */
+.schedule-placeholder {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #333;
+    text-align: center;
+}
 </style>
 
 <div class="pick-container">
@@ -177,7 +186,7 @@ button:hover {
                     <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
                     <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
                     <h4>Record: <?php echo $currentPick['record'] ?? '--'; ?></h4>
-                    <p>Opponent: <?php echo $currentPick['opponent'] ?? '--'; ?></p>
+                    <div class="schedule-placeholder">📅 <strong>Schedule:</strong> API integration coming soon.</div>
                 </div>
             </div>
         </div>
