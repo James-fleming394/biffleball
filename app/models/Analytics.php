@@ -3,79 +3,74 @@ require_once __DIR__ . '/../config.php';
 
 class Analytics {
     public static function getWAAStats() {
-        global $pdo;
+    global $pdo;
 
-        // Fetch all users
-        $usersStmt = $pdo->query("SELECT id, username FROM users ORDER BY username ASC");
-        $users = $usersStmt->fetchAll(PDO::FETCH_ASSOC);
+    // Get all users
+    $usersStmt = $pdo->query("SELECT id, username FROM users ORDER BY username ASC");
+    $usersRaw = $usersStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Fetch all teams with win totals
-        $teamsStmt = $pdo->query("SELECT id, name, win_total FROM teams ORDER BY name ASC");
-        $teams = $teamsStmt->fetchAll(PDO::FETCH_ASSOC);
+    // Get all teams
+    $teamsStmt = $pdo->query("SELECT id, abbreviation FROM teams ORDER BY abbreviation ASC");
+    $teams = $teamsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Calculate simulated average weekly wins for each team
-        $teamAverages = [];
-        foreach ($teams as $team) {
-            $teamAverages[$team['id']] = round($team['win_total'] / 26, 2);
-        }
-
-        // Fetch all picks
-        $picksStmt = $pdo->query("SELECT user_id, team_id FROM picks");
-        $picks = $picksStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Initialize stats
-        $userTeamWins = [];
-        $teamUserSet = [];
-
-        foreach ($users as $user) {
-            $userTeamWins[$user['id']] = ['username' => $user['username']];
-            foreach ($teams as $team) {
-                $userTeamWins[$user['id']][$team['name']] = 0;
-            }
-        }
-
-        // Populate wins per user/team
-        foreach ($picks as $pick) {
-            $userId = $pick['user_id'];
-            $teamId = $pick['team_id'];
-
-            $teamName = '';
-            foreach ($teams as $team) {
-                if ($team['id'] == $teamId) {
-                    $teamName = $team['name'];
-                    break;
-                }
-            }
-
-            if ($teamName && isset($teamAverages[$teamId])) {
-                $userTeamWins[$userId][$teamName] += $teamAverages[$teamId];
-                $teamUserSet[$teamName][$userId] = true;
-            }
-        }
-
-        // Calculate league averages and availability
-        $leagueAverage = [];
-        $usersWithTeamAvailable = [];
-
-        foreach ($teams as $team) {
-            $teamName = $team['name'];
-            $sum = 0;
-            $count = 0;
-
-            foreach ($userTeamWins as $row) {
-                $sum += $row[$teamName];
-                $count++;
-            }
-
-            $leagueAverage[$teamName] = $count ? round($sum / $count, 2) : 0;
-            $usersWithTeamAvailable[$teamName] = count($users) - count($teamUserSet[$teamName] ?? []);
-        }
-
-        return [
-            'users' => array_values($userTeamWins),
-            'teams' => array_column($teams, 'name'),
-            'leagueAverage' => $leagueAverage,
-            'usersWithTeamAvailable' => $usersWithTeamAvailable
+    // Initialize empty wins for each user
+    $users = [];
+    foreach ($usersRaw as $user) {
+        $users[$user['id']] = [
+            'username' => $user['username'],
+            'team_wins' => array_fill_keys(array_column($teams, 'abbreviation'), 0),
         ];
     }
+
+    // Fetch picks (simulate 1 win per pick for now)
+    $picksStmt = $pdo->query("
+        SELECT picks.user_id, teams.abbreviation
+        FROM picks
+        JOIN teams ON picks.team_id = teams.id
+    ");
+    $picks = $picksStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Tally wins per team per user
+    foreach ($picks as $pick) {
+        $userId = $pick['user_id'];
+        $abbr = $pick['abbreviation'];
+        if (isset($users[$userId]['team_wins'][$abbr])) {
+            $users[$userId]['team_wins'][$abbr]++;
+        }
+    }
+
+    // Simulate league average per team
+    $leagueAverages = array_fill_keys(array_column($teams, 'abbreviation'), 0);
+    $userCount = count($users);
+
+    foreach ($teams as $team) {
+        $abbr = $team['abbreviation'];
+        $totalWins = 0;
+        foreach ($users as $user) {
+            $totalWins += $user['team_wins'][$abbr];
+        }
+        $leagueAverages[$abbr] = $userCount > 0 ? round($totalWins / $userCount, 2) : 0;
+    }
+
+    // Simulate availability per team
+    $availability = array_fill_keys(array_column($teams, 'abbreviation'), 0);
+    foreach ($teams as $team) {
+        $abbr = $team['abbreviation'];
+        $count = 0;
+        foreach ($users as $user) {
+            if ($user['team_wins'][$abbr] === 0) {
+                $count++;
+            }
+        }
+        $availability[$abbr] = $count;
+    }
+
+    return [
+        'users' => array_values($users), // reset to sequential array
+        'teams' => $teams,
+        'leagueAverages' => $leagueAverages,
+        'availability' => $availability
+    ];
+}
+
 }

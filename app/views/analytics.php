@@ -2,126 +2,128 @@
 
 <style>
 .analytics-section {
-    border: 1px solid #ddd;
+    margin: 2rem auto;
+    max-width: 95%;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    margin: 1rem auto;
-    padding: 0;
-    width: 90%;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     overflow: hidden;
+    background-color: #f9f9f9;
 }
 
 .analytics-header {
-    background-color: #0074D9;
-    color: #fff;
-    padding: 1rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #0074D9;
+    color: white;
+    padding: 1rem 1.2rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.analytics-toggle-icon {
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
 .analytics-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    padding: 0 1rem;
+    transition: max-height 0.4s ease;
+    background-color: white;
+    padding: 0 1.2rem;
 }
 
-.analytics-content.expanded {
-    padding: 1rem;
-    max-height: 2000px;
+.analytics-content.active {
+    padding: 1.2rem;
+    max-height: 1200px;
 }
 
-.toggle-icon {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.waa-table {
+.analytics-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.analytics-table th,
+.analytics-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
     font-size: 0.9rem;
 }
 
-.waa-table th,
-.waa-table td {
-    border: 1px solid #ddd;
-    padding: 6px;
-    text-align: center;
-}
-
-.waa-table th {
-    background-color: #f2f2f2;
+.analytics-table th {
+    background-color: #0074D9;
+    color: white;
     position: sticky;
     top: 0;
     z-index: 1;
 }
-.waa-table tfoot {
+
+.analytics-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.summary-row {
     font-weight: bold;
-    background-color: #f9f9f9;
+    background-color: #e3e3e3;
 }
 </style>
 
-<h2 style="text-align:center;">📊 Advanced Analytics</h2>
+<h2 style="text-align:center; margin-top:2rem;">Advanced Analytics</h2>
 
-<!-- WAA Section -->
 <div class="analytics-section">
     <div class="analytics-header" onclick="toggleSection(this)">
         Wins Above Average (WAA)
-        <span class="toggle-icon">−</span>
+        <span class="analytics-toggle-icon">–</span>
     </div>
-    <div class="analytics-content expanded">
+    <div class="analytics-content active">
         <div style="overflow-x: auto;">
-            <table class="waa-table">
+            <table class="analytics-table">
                 <thead>
                     <tr>
                         <th>Username</th>
                         <?php foreach ($teams as $team): ?>
-                            <th><?php echo htmlspecialchars($team['name']); ?></th>
+                            <th><?php echo htmlspecialchars($team['abbreviation']); ?></th>
                         <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($waaStats as $row): ?>
+                    <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($user['username']); ?></td>
                             <?php foreach ($teams as $team): ?>
-                                <td><?php echo $row['team_wins'][$team['name']] ?? 0; ?></td>
+                                <td><?php echo $user['team_wins'][$team['abbreviation']] ?? 0; ?></td>
                             <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>
+                    <tr class="summary-row">
+                        <td>League Avg</td>
+                        <?php foreach ($teams as $team): ?>
+                            <td><?php echo $leagueAverages[$team['abbreviation']] ?? 0; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>Available</td>
+                        <?php foreach ($teams as $team): ?>
+                            <td><?php echo $availability[$team['abbreviation']] ?? 0; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td>League Avg. With Team</td>
-                        <?php foreach ($teams as $team): ?>
-                            <td><?php echo number_format($leagueAverages[$team['name']] ?? 0, 2); ?></td>
-                        <?php endforeach; ?>
-                    </tr>
-                    <tr>
-                        <td>Users With Team Available</td>
-                        <?php foreach ($teams as $team): ?>
-                            <td><?php echo $usersAvailable[$team['name']] ?? 0; ?></td>
-                        <?php endforeach; ?>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
 </div>
 
-<!-- SOTU Section -->
 <div class="analytics-section">
     <div class="analytics-header" onclick="toggleSection(this)">
         Strength of Teams Used (SOTU)
-        <span class="toggle-icon">+</span>
+        <span class="analytics-toggle-icon">+</span>
     </div>
     <div class="analytics-content">
-        <table class="waa-table">
+        <table class="analytics-table">
             <thead>
                 <tr>
                     <th>Username</th>
@@ -129,7 +131,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($sotuStats as $row): ?>
+                <?php foreach ($sotuStats ?? [] as $row): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                         <td><?php echo $row['sotu']; ?></td>
@@ -140,11 +142,10 @@
     </div>
 </div>
 
-<!-- MLB Weekly Win Totals -->
 <div class="analytics-section">
     <div class="analytics-header" onclick="toggleSection(this)">
         MLB Weekly Win Totals
-        <span class="toggle-icon">+</span>
+        <span class="analytics-toggle-icon">+</span>
     </div>
     <div class="analytics-content">
         <form method="GET" action="">
@@ -159,11 +160,10 @@
     </div>
 </div>
 
-<!-- Weekly Pick Distribution -->
 <div class="analytics-section">
     <div class="analytics-header" onclick="toggleSection(this)">
         Weekly Pick Distribution
-        <span class="toggle-icon">+</span>
+        <span class="analytics-toggle-icon">+</span>
     </div>
     <div class="analytics-content">
         <form method="GET" action="">
@@ -178,31 +178,22 @@
     </div>
 </div>
 
-<!-- Teams Used by Individuals -->
 <div class="analytics-section">
     <div class="analytics-header" onclick="toggleSection(this)">
         Teams Used by Individuals
-        <span class="toggle-icon">+</span>
+        <span class="analytics-toggle-icon">+</span>
     </div>
     <div class="analytics-content">
-        <p>Coming soon.</p>
+        <p>Coming soon...</p>
     </div>
 </div>
 
 <script>
 function toggleSection(header) {
     const content = header.nextElementSibling;
-    const icon = header.querySelector('.toggle-icon');
-
-    if (content.classList.contains('expanded')) {
-        content.classList.remove('expanded');
-        icon.textContent = '+';
-    } else {
-        document.querySelectorAll('.analytics-content').forEach(c => c.classList.remove('expanded'));
-        document.querySelectorAll('.toggle-icon').forEach(i => i.textContent = '+');
-        content.classList.add('expanded');
-        icon.textContent = '−';
-    }
+    const icon = header.querySelector('.analytics-toggle-icon');
+    content.classList.toggle('active');
+    icon.textContent = content.classList.contains('active') ? '–' : '+';
 }
 </script>
 
