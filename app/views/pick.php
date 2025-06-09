@@ -99,7 +99,7 @@ button:hover {
 </style>
 
 <div class="pick-container">
-    <h2>🏟️ Pick Your Team for This Week</h2>
+    <h2>🏟️ Pick Your Team for This Week 🏟️</h2>
 
     <div class="countdown" id="countdown"></div>
 
@@ -160,5 +160,49 @@ button:hover {
     <?php endif; ?>
 </div>
 
+<script>
+// Countdown to Sunday 9PM EST
+function updateCountdown() {
+    const now = new Date();
+    let sunday = new Date();
+    sunday.setDate(now.getDate() + (7 - now.getDay()) % 7);
+    sunday.setHours(21, 0, 0, 0);
+
+    const diff = sunday - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").textContent =
+        `⏳ Picks Locked in: ${hours}h ${minutes}m ${seconds}s ⏳`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+<?php
+// Helpers to determine team image and color
+function getTeamImageFilename($teamName) {
+    return strtolower(str_replace(' ', '', explode(' ', $teamName)[count(explode(' ', $teamName))-1])) . ".png";
+}
+
+function getTeamColor($teamName) {
+    $colors = [
+        'Yankees' => '#132448',
+        'Red Sox' => '#BD3039',
+        'Dodgers' => '#005A9C',
+        'Cubs' => '#0E3386',
+        'Braves' => '#CE1141',
+        'Phillies' => '#E81828',
+        
+    ];
+    $key = explode(' ', $teamName);
+    $lastWord = end($key);
+    return $colors[$lastWord] ?? '#0074D9';
+}
+?>
+
 <?php include 'footer.php'; ?>
+
 
