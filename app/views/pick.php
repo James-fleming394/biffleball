@@ -189,18 +189,43 @@ function getTeamImageFilename($teamName) {
 
 function getTeamColor($teamName) {
     $colors = [
-        'Yankees' => '#132448',
-        'Red Sox' => '#BD3039',
-        'Dodgers' => '#005A9C',
-        'Cubs' => '#0E3386',
+        'Angels' => '#BA0021',
+        'Astros' => '#002D62',
+        'Athletics' => '#003831',
+        'Blue Jays' => '#134A8E',
         'Braves' => '#CE1141',
+        'Brewers' => '#12284B',
+        'Cardinals' => '#C41E3A',
+        'Cubs' => '#0E3386',
+        'Diamondbacks' => '#A71930',
+        'Dodgers' => '#005A9C',
+        'Giants' => '#FD5A1E',
+        'Guardians' => '#0F223E',
+        'Mariners' => '#0C2C56',
+        'Marlins' => '#00A3E0',
+        'Mets' => '#002D72',
+        'Nationals' => '#AB0003',
+        'Orioles' => '#DF4601',
+        'Padres' => '#2F241D',
         'Phillies' => '#E81828',
-        
+        'Pirates' => '#FDB827',
+        'Rangers' => '#003278',
+        'Rays' => '#092C5C',
+        'Red Sox' => '#BD3039',
+        'Reds' => '#C6011F',
+        'Rockies' => '#333366',
+        'Royals' => '#004687',
+        'Tigers' => '#0C2340',
+        'Twins' => '#002B5C',
+        'White Sox' => '#27251F',
+        'Yankees' => '#132448',
     ];
-    $key = explode(' ', $teamName);
-    $lastWord = end($key);
-    return $colors[$lastWord] ?? '#0074D9';
+
+    $parts = explode(' ', $teamName);
+    $lastWord = end($parts);
+    return $colors[$lastWord] ?? '#0074D9'; // default blue fallback
 }
+
 ?>
 
 <?php include 'footer.php'; ?>
