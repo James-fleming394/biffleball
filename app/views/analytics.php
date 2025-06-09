@@ -18,14 +18,41 @@
 }
 
 .analytics-container section {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
+    border: 3px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .analytics-container h3 {
-    margin-bottom: 1rem;
+    margin: 0;
     color: #333;
-    border-bottom: 2px solid #0074D9;
-    padding-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.toggle-btn {
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #0074D9;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.analytics-content {
+    margin-top: 1rem;
+    display: none;
+}
+
+.analytics-content.show {
+    display: block;
 }
 
 .analytics-table {
@@ -85,65 +112,101 @@
     <h2>📊 Advanced Analytics</h2>
 
     <section>
-        <h3>Wins Above Average (WAA)</h3>
-        <p>Coming soon...</p>
+        <h3 onclick="toggleSection(this)">
+            Wins Above Average (WAA)
+            <button class="toggle-btn">−</button>
+        </h3>
+        <div class="analytics-content show">
+            <p>Coming soon...</p>
+        </div>
     </section>
 
     <section>
-        <h3>Wins Above Average* (WAA*)</h3>
-        <p>Coming soon...</p>
-    </section>
-
-    <section>
-        <h3>Strength of Teams Used (SOTU)</h3>
-        <table class="analytics-table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>SOTU</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($sotuStats as $row): ?>
+        <h3 onclick="toggleSection(this)">
+            Strength of Teams Used (SOTU)
+            <button class="toggle-btn">+</button>
+        </h3>
+        <div class="analytics-content">
+            <table class="analytics-table">
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['username']); ?></td>
-                        <td><?php echo $row['sotu']; ?></td>
+                        <th>Username</th>
+                        <th>SOTU (Avg. Team Wins)</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($sotuStats as $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo $row['sotu']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section>
-        <h3>MLB Weekly Win Totals</h3>
-        <form method="GET" action="">
-            <label for="week">Select Week:</label>
-            <select name="week" id="week">
-                <?php for ($w = 1; $w <= 26; $w++): ?>
-                    <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
-                <?php endfor; ?>
-            </select>
-            <button type="submit">View</button>
-        </form>
+        <h3 onclick="toggleSection(this)">
+            MLB Weekly Win Totals
+            <button class="toggle-btn">+</button>
+        </h3>
+        <div class="analytics-content">
+            <form method="GET" action="">
+                <label for="week">Select Week:</label>
+                <select name="week" id="week">
+                    <?php for ($w = 1; $w <= 26; $w++): ?>
+                        <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
+                    <?php endfor; ?>
+                </select>
+                <button type="submit">View</button>
+            </form>
+        </div>
     </section>
 
     <section>
-        <h3>Weekly Pick Distribution</h3>
-        <form method="GET" action="">
-            <label for="week_distribution">Select Week:</label>
-            <select name="week_distribution" id="week_distribution">
-                <?php for ($w = 1; $w <= 26; $w++): ?>
-                    <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
-                <?php endfor; ?>
-            </select>
-            <button type="submit">View</button>
-        </form>
+        <h3 onclick="toggleSection(this)">
+            Weekly Pick Distribution
+            <button class="toggle-btn">+</button>
+        </h3>
+        <div class="analytics-content">
+            <form method="GET" action="">
+                <label for="week_distribution">Select Week:</label>
+                <select name="week_distribution" id="week_distribution">
+                    <?php for ($w = 1; $w <= 26; $w++): ?>
+                        <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
+                    <?php endfor; ?>
+                </select>
+                <button type="submit">View</button>
+            </form>
+        </div>
     </section>
 
     <section>
-        <h3>Teams Used by Individuals</h3>
-        <p>Coming soon...</p>
+        <h3 onclick="toggleSection(this)">
+            Teams Used by Individuals
+            <button class="toggle-btn">+</button>
+        </h3>
+        <div class="analytics-content">
+            <p>Coming soon...</p>
+        </div>
     </section>
 </div>
+
+<script>
+function toggleSection(header) {
+    const content = header.nextElementSibling;
+    const button = header.querySelector('.toggle-btn');
+    const isVisible = content.classList.contains('show');
+
+    if (isVisible) {
+        content.classList.remove('show');
+        button.textContent = "+";
+    } else {
+        content.classList.add('show');
+        button.textContent = "−";
+    }
+}
+</script>
 
 <?php include 'footer.php'; ?>
