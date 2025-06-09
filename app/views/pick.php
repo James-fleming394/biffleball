@@ -296,6 +296,52 @@ function getTeamColor($teamName) {
     $lastWord = end($parts);
     return $colors[$lastWord] ?? '#0074D9';
 }
+
+function getTeamDivisionInfo($teamName) {
+    $divisions = [
+        'Yankees' => ['league' => 'AL', 'division' => 'East'],
+        'Red Sox' => ['league' => 'AL', 'division' => 'East'],
+        'Blue Jays' => ['league' => 'AL', 'division' => 'East'],
+        'Rays' => ['league' => 'AL', 'division' => 'East'],
+        'Orioles' => ['league' => 'AL', 'division' => 'East'],
+
+        'White Sox' => ['league' => 'AL', 'division' => 'Central'],
+        'Guardians' => ['league' => 'AL', 'division' => 'Central'],
+        'Tigers' => ['league' => 'AL', 'division' => 'Central'],
+        'Royals' => ['league' => 'AL', 'division' => 'Central'],
+        'Twins' => ['league' => 'AL', 'division' => 'Central'],
+
+        'Astros' => ['league' => 'AL', 'division' => 'West'],
+        'Rangers' => ['league' => 'AL', 'division' => 'West'],
+        'Angels' => ['league' => 'AL', 'division' => 'West'],
+        'Mariners' => ['league' => 'AL', 'division' => 'West'],
+        'Athletics' => ['league' => 'AL', 'division' => 'West'],
+
+        'Braves' => ['league' => 'NL', 'division' => 'East'],
+        'Phillies' => ['league' => 'NL', 'division' => 'East'],
+        'Mets' => ['league' => 'NL', 'division' => 'East'],
+        'Marlins' => ['league' => 'NL', 'division' => 'East'],
+        'Nationals' => ['league' => 'NL', 'division' => 'East'],
+
+        'Cardinals' => ['league' => 'NL', 'division' => 'Central'],
+        'Cubs' => ['league' => 'NL', 'division' => 'Central'],
+        'Brewers' => ['league' => 'NL', 'division' => 'Central'],
+        'Reds' => ['league' => 'NL', 'division' => 'Central'],
+        'Pirates' => ['league' => 'NL', 'division' => 'Central'],
+
+        'Dodgers' => ['league' => 'NL', 'division' => 'West'],
+        'Padres' => ['league' => 'NL', 'division' => 'West'],
+        'Giants' => ['league' => 'NL', 'division' => 'West'],
+        'Diamondbacks' => ['league' => 'NL', 'division' => 'West'],
+        'Rockies' => ['league' => 'NL', 'division' => 'West'],
+    ];
+
+    $parts = explode(' ', $teamName);
+    $lastWord = end($parts);
+
+    return $divisions[$lastWord] ?? ['league' => '—', 'division' => '—'];
+}
+
 ?>
 
 <?php include 'footer.php'; ?>
