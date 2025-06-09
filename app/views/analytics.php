@@ -6,7 +6,7 @@
     border-radius: 8px;
     margin: 1rem auto;
     padding: 0;
-    max-width: 1200px;
+    width: 90%;
     background: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     overflow: hidden;
