@@ -175,6 +175,30 @@ button:hover {
     border-radius: 4px;
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 20% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #0074D9;
+}
+
+
 </style>
 
 <div class="pick-container">
@@ -210,7 +234,7 @@ button:hover {
     <?php endif; ?>
 
     <?php if (empty($currentPick)): ?>
-        <form action="index.php?page=pick-team" method="POST">
+        <form action="index.php?page=pick-team" method="POST" class="pick-form">
             <label for="team_id">Select Team:</label>
             <select name="team_id" required>
                 <option value="" disabled selected>Choose a team</option>
@@ -230,7 +254,7 @@ button:hover {
 
     <?php if (!empty($currentPick) && $canChangePick): ?>
         <h3>Change Your Pick</h3>
-        <form action="index.php?page=change-pick" method="POST">
+        <form action="index.php?page=change-pick" method="POST" class="pick-form">
             <label for="new_team_id">Change to:</label>
             <select name="new_team_id" required>
                 <option value="" disabled selected>Choose a new team</option>
@@ -266,6 +290,27 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Modal confirmation logic
+function showSubmissionModalAndSubmit(form) {
+    const modal = document.getElementById('submissionModal');
+    modal.style.display = 'block';
+
+    setTimeout(() => {
+        form.submit();
+    }, 1500); // Delay before actual form submission
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('.pick-form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            showSubmissionModalAndSubmit(this);
+        });
+    });
+});
 </script>
 
 <?php
@@ -356,7 +401,12 @@ function getTeamDivisionInfo($teamName) {
 
     return $divisions[$lastWord] ?? ['league' => '—', 'division' => '—'];
 }
-
 ?>
+<!-- Submission Modal -->
+<div id="submissionModal" class="modal">
+    <div class="modal-content">
+        <p>Your pick has been submitted! 🎉</p>
+    </div>
+</div>
 
 <?php include 'footer.php'; ?>
