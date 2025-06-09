@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../config.php';
 
 class Standings {
+    // Used by the standings page
     public static function getAllUsersWithCurrentTeam() {
         global $pdo;
 
@@ -19,5 +20,19 @@ class Standings {
         $stmt->execute([$week]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-}
 
+    // Used for ranking users (e.g., on profile page)
+    public static function getAll() {
+        global $pdo;
+
+        $stmt = $pdo->prepare("
+            SELECT users.username, COUNT(picks.id) AS total_wins
+            FROM users
+            LEFT JOIN picks ON users.id = picks.user_id
+            GROUP BY users.id
+            ORDER BY total_wins DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}

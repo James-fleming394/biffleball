@@ -7,7 +7,7 @@
     background: #fff;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.1);
 }
 
 .profile-header {
@@ -178,6 +178,11 @@
     background-color: #d5d5d5;
 }
 
+.stats-summary {
+    background: #f4f9ff;
+    padding: 1rem 1.5rem;
+}
+
 </style>
 
 <div class="profile-container">
@@ -211,6 +216,22 @@
 
     </div>
 
+    <?php
+        // Compute leaderboard rank
+        $leaderboard = Standings::getAll();
+        $rank = 1;
+        foreach ($leaderboard as $entry) {
+            if ($entry['username'] === $user['username']) break;
+            $rank++;
+        }
+
+        // Compute pick stats
+        $totalPicks = count($picks);
+        $teamsUsed = array_unique(array_column($picks, 'team_name'));
+        $uniqueTeams = count($teamsUsed);
+    ?>
+    <p><strong>🏆 Leaderboard Rank:</strong> <?php echo $rank; ?> out of <?php echo count($leaderboard); ?></p>
+
     <h3>My Picks</h3>
     <table class="picks-table">
         <thead>
@@ -230,6 +251,14 @@
     </table>
 
     <a href="index.php?page=pick-team" class="pick-link">Make a Pick</a>
+
+    <div class="stats-summary">
+    <h3>📈 Stats Summary</h3>
+    <p><strong>Total Picks:</strong> <?php echo count($picks); ?></p>
+    <p><strong>Total Wins:</strong> <?php echo $user['total_wins'] ?? 0; ?></p>
+    <p><strong>Win %:</strong> <?php echo $user['win_percent'] ?? '0%'; ?></p>
+</div>
+
 </div>
 
 <script>
