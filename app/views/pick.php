@@ -17,7 +17,7 @@
     perspective: 1000px;
     margin: 1rem auto;
     width: 260px;
-    height: 350px;
+    height: 360px;
     margin-bottom: 5rem;
 }
 
@@ -36,17 +36,14 @@
 
 .card-front, .card-back {
     position: absolute;
+    padding: 1rem;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
 }
 
 .card-front {
@@ -56,24 +53,83 @@
 .card-back {
     transform: rotateY(180deg);
     background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Week label */
+.week-label {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.6rem;
+    background-color:rgb(38, 39, 41);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    z-index: 2;
+}
+
+/* Pennant image */
+.pennant-img {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    transform: translateX(-10px) rotate(10deg);
+    width: 80px;
+    height: auto;
+    z-index: 2;
+}
+
+/* Team name above logo box */
+.team-name-header {
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Logo container */
+.logo-box {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .card img.team-logo {
     width: 120px;
     height: auto;
-    margin: 1rem 0;
 }
 
-.pennant {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: #0074D9;
+/* Team name box at bottom */
+.team-name-box {
+    background-color: #0074D9;
     color: white;
-    font-size: 0.75rem;
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    width: 100%;
+    text-align: center;
     font-weight: bold;
-    padding: 0.3rem 0.6rem;
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 100%, 0 100%);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: 2px solid white;
+}
+
+/* MLB logo */
+.card .mlb-logo {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 40px;
+    height: auto;
+    opacity: 0.7;
+    z-index: 1;
 }
 
 form {
@@ -108,10 +164,13 @@ button:hover {
         <div class="card-wrapper">
             <div class="card">
                 <div class="card-front" style="border-color: <?php echo getTeamColor($currentPick['team_name']); ?>">
-                    <div class="pennant">Biffleball</div>
-                    <h3>Week <?php echo $currentPick['week']; ?></h3>
-                    <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
-                    <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
+                    <div class="week-label">Week <?php echo $currentPick['week']; ?></div>
+                    <img src="/images/BiffleballPennant.png" alt="Biffleball Pennant" class="pennant-img">
+                    <div class="team-name-header"><?php echo htmlspecialchars($currentPick['team_name']); ?></div>
+                    <div class="logo-box">
+                        <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
+                    </div>
+                    <img src="/images/mlblogo.png" class="mlb-logo" alt="MLB Logo">
                 </div>
                 <div class="card-back">
                     <h3>Current Pick</h3>
@@ -186,7 +245,7 @@ updateCountdown();
 </script>
 
 <?php
-// Helpers to determine team image and color
+// Helpers
 function getTeamImageFilename($teamName) {
     return strtolower(str_replace(' ', '', explode(' ', $teamName)[count(explode(' ', $teamName))-1])) . ".png";
 }
@@ -226,11 +285,8 @@ function getTeamColor($teamName) {
     ];
     $parts = explode(' ', $teamName);
     $lastWord = end($parts);
-    return $colors[$lastWord] ?? '#0074D9'; // default blue fallback
+    return $colors[$lastWord] ?? '#0074D9';
 }
-
 ?>
 
 <?php include 'footer.php'; ?>
-
-
