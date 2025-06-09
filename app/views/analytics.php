@@ -1,215 +1,207 @@
 <?php include 'header.php'; ?>
 
 <style>
-.analytics-container {
-    max-width: 90%;
-    margin: 3rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-}
-
-.analytics-container h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    color: #0074D9;
-}
-
-.analytics-container section {
-    margin-bottom: 2.5rem;
-    border: 3px solid #eee;
+.analytics-section {
+    border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 1rem;
-    position: relative;
-    transition: all 0.3s ease;
+    margin: 1rem auto;
+    padding: 0;
+    max-width: 1200px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
 }
 
-.analytics-container h3 {
-    margin: 0;
-    color: #333;
+.analytics-header {
+    background-color: #0074D9;
+    color: #fff;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.3rem;
-    cursor: pointer;
 }
 
-.toggle-btn {
-    font-size: 1.3rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #0074D9;
-    font-weight: bold;
-    transition: transform 0.3s ease;
-}
-
-/* Animated content area */
 .analytics-content {
-    overflow: hidden;
     max-height: 0;
-    opacity: 0;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 1rem;
 }
 
-.analytics-content.show {
-    max-height: 800px; /* large enough to contain content */
-    opacity: 1;
-    margin-top: 1rem;
+.analytics-content.expanded {
+    padding: 1rem;
+    max-height: 2000px;
 }
 
-.analytics-table {
+.toggle-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.waa-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    font-size: 0.9rem;
 }
 
-.analytics-table th,
-.analytics-table td {
+.waa-table th,
+.waa-table td {
     border: 1px solid #ddd;
-    padding: 0.75rem;
+    padding: 6px;
     text-align: center;
 }
 
-.analytics-table th {
-    background-color: #0074D9;
-    color: white;
+.waa-table th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
-
-.analytics-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.analytics-container form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.analytics-container select,
-.analytics-container button {
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.analytics-container button {
-    background-color: #0074D9;
-    color: white;
+.waa-table tfoot {
     font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.analytics-container button:hover {
-    background-color: #005fa3;
+    background-color: #f9f9f9;
 }
 </style>
 
-<div class="analytics-container">
-    <h2>📊 Advanced Analytics</h2>
+<h2 style="text-align:center;">📊 Advanced Analytics</h2>
 
-    <section>
-        <h3 onclick="toggleSection(this)">
-            Wins Above Average (WAA)
-            <button class="toggle-btn">−</button>
-        </h3>
-        <div class="analytics-content show">
-            <p>Coming soon...</p>
-        </div>
-    </section>
-
-    <section>
-        <h3 onclick="toggleSection(this)">
-            Strength of Teams Used (SOTU)
-            <button class="toggle-btn">+</button>
-        </h3>
-        <div class="analytics-content">
-            <table class="analytics-table">
+<!-- WAA Section -->
+<div class="analytics-section">
+    <div class="analytics-header" onclick="toggleSection(this)">
+        Wins Above Average (WAA)
+        <span class="toggle-icon">−</span>
+    </div>
+    <div class="analytics-content expanded">
+        <div style="overflow-x: auto;">
+            <table class="waa-table">
                 <thead>
                     <tr>
                         <th>Username</th>
-                        <th>SOTU (Avg. Team Wins)</th>
+                        <?php foreach ($teams as $team): ?>
+                            <th><?php echo htmlspecialchars($team['name']); ?></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($sotuStats as $row): ?>
+                    <?php foreach ($waaStats as $row): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['username']); ?></td>
-                            <td><?php echo $row['sotu']; ?></td>
+                            <?php foreach ($teams as $team): ?>
+                                <td><?php echo $row['team_wins'][$team['name']] ?? 0; ?></td>
+                            <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>League Avg. With Team</td>
+                        <?php foreach ($teams as $team): ?>
+                            <td><?php echo number_format($leagueAverages[$team['name']] ?? 0, 2); ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <tr>
+                        <td>Users With Team Available</td>
+                        <?php foreach ($teams as $team): ?>
+                            <td><?php echo $usersAvailable[$team['name']] ?? 0; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                </tfoot>
             </table>
         </div>
-    </section>
+    </div>
+</div>
 
-    <section>
-        <h3 onclick="toggleSection(this)">
-            MLB Weekly Win Totals
-            <button class="toggle-btn">+</button>
-        </h3>
-        <div class="analytics-content">
-            <form method="GET" action="">
-                <label for="week">Select Week:</label>
-                <select name="week" id="week">
-                    <?php for ($w = 1; $w <= 26; $w++): ?>
-                        <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
-                    <?php endfor; ?>
-                </select>
-                <button type="submit">View</button>
-            </form>
-        </div>
-    </section>
+<!-- SOTU Section -->
+<div class="analytics-section">
+    <div class="analytics-header" onclick="toggleSection(this)">
+        Strength of Teams Used (SOTU)
+        <span class="toggle-icon">+</span>
+    </div>
+    <div class="analytics-content">
+        <table class="waa-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>SOTU (Avg. Team Wins)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($sotuStats as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                        <td><?php echo $row['sotu']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <section>
-        <h3 onclick="toggleSection(this)">
-            Weekly Pick Distribution
-            <button class="toggle-btn">+</button>
-        </h3>
-        <div class="analytics-content">
-            <form method="GET" action="">
-                <label for="week_distribution">Select Week:</label>
-                <select name="week_distribution" id="week_distribution">
-                    <?php for ($w = 1; $w <= 26; $w++): ?>
-                        <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
-                    <?php endfor; ?>
-                </select>
-                <button type="submit">View</button>
-            </form>
-        </div>
-    </section>
+<!-- MLB Weekly Win Totals -->
+<div class="analytics-section">
+    <div class="analytics-header" onclick="toggleSection(this)">
+        MLB Weekly Win Totals
+        <span class="toggle-icon">+</span>
+    </div>
+    <div class="analytics-content">
+        <form method="GET" action="">
+            <label for="week">Select Week:</label>
+            <select name="week" id="week">
+                <?php for ($w = 1; $w <= 26; $w++): ?>
+                    <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
+                <?php endfor; ?>
+            </select>
+            <button type="submit">View</button>
+        </form>
+    </div>
+</div>
 
-    <section>
-        <h3 onclick="toggleSection(this)">
-            Teams Used by Individuals
-            <button class="toggle-btn">+</button>
-        </h3>
-        <div class="analytics-content">
-            <p>Coming soon...</p>
-        </div>
-    </section>
+<!-- Weekly Pick Distribution -->
+<div class="analytics-section">
+    <div class="analytics-header" onclick="toggleSection(this)">
+        Weekly Pick Distribution
+        <span class="toggle-icon">+</span>
+    </div>
+    <div class="analytics-content">
+        <form method="GET" action="">
+            <label for="week_distribution">Select Week:</label>
+            <select name="week_distribution" id="week_distribution">
+                <?php for ($w = 1; $w <= 26; $w++): ?>
+                    <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
+                <?php endfor; ?>
+            </select>
+            <button type="submit">View</button>
+        </form>
+    </div>
+</div>
+
+<!-- Teams Used by Individuals -->
+<div class="analytics-section">
+    <div class="analytics-header" onclick="toggleSection(this)">
+        Teams Used by Individuals
+        <span class="toggle-icon">+</span>
+    </div>
+    <div class="analytics-content">
+        <p>Coming soon.</p>
+    </div>
 </div>
 
 <script>
 function toggleSection(header) {
     const content = header.nextElementSibling;
-    const button = header.querySelector('.toggle-btn');
-    const isVisible = content.classList.contains('show');
+    const icon = header.querySelector('.toggle-icon');
 
-    if (isVisible) {
-        content.classList.remove('show');
-        button.textContent = "+";
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        icon.textContent = '+';
     } else {
-        content.classList.add('show');
-        button.textContent = "−";
+        document.querySelectorAll('.analytics-content').forEach(c => c.classList.remove('expanded'));
+        document.querySelectorAll('.toggle-icon').forEach(i => i.textContent = '+');
+        content.classList.add('expanded');
+        icon.textContent = '−';
     }
 }
 </script>
