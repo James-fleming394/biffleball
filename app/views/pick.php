@@ -1,5 +1,103 @@
 <?php include 'header.php'; ?>
 
+<style>
+.pick-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    text-align: center;
+}
+
+.countdown {
+    font-size: 1.25rem;
+    color: #0074D9;
+    margin-bottom: 2rem;
+}
+
+.card-wrapper {
+    perspective: 1000px;
+    margin: 2rem auto;
+    width: 260px;
+    height: 350px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front {
+    border: 5px solid #0074D9;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background-color: #f7f7f7;
+}
+
+.card img.team-logo {
+    width: 120px;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.pennant {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #0074D9;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 100%, 0 100%);
+}
+
+form {
+    margin-bottom: 2rem;
+}
+
+select, button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    margin: 0.5rem;
+    border-radius: 6px;
+}
+
+button {
+    background-color: #0074D9;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+</style>
+
 <div class="pick-container">
     <h2>🏟️ Pick Your Team for This Week</h2>
 
