@@ -46,13 +46,18 @@
     transition: transform 0.3s ease;
 }
 
+/* Animated content area */
 .analytics-content {
-    margin-top: 1rem;
-    display: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
 .analytics-content.show {
-    display: block;
+    max-height: 800px; /* large enough to contain content */
+    opacity: 1;
+    margin-top: 1rem;
 }
 
 .analytics-table {
