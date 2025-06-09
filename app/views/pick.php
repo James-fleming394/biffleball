@@ -15,9 +15,10 @@
 
 .card-wrapper {
     perspective: 1000px;
-    margin: 2rem auto;
+    margin: 1rem auto;
     width: 260px;
     height: 350px;
+    margin-bottom: 5rem;
 }
 
 .card {
@@ -113,6 +114,9 @@ button:hover {
                     <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
                 </div>
                 <div class="card-back">
+                    <h3>Current Pick</h3>
+                    <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
+                    <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
                     <h4>Record: <?php echo $currentPick['record'] ?? '--'; ?></h4>
                     <p>Opponent: <?php echo $currentPick['opponent'] ?? '--'; ?></p>
                 </div>
@@ -220,7 +224,6 @@ function getTeamColor($teamName) {
         'White Sox' => '#27251F',
         'Yankees' => '#132448',
     ];
-
     $parts = explode(' ', $teamName);
     $lastWord = end($parts);
     return $colors[$lastWord] ?? '#0074D9'; // default blue fallback
