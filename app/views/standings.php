@@ -3,11 +3,10 @@
 <style>
 .standings-wrapper {
     margin-top: 0;
-    margin-bottom: -75px;
-    padding-top: 2rem; 
+    padding: 1rem; 
     background: linear-gradient(135deg, rgb(27, 19, 183), rgb(110, 174, 246));
     background-color: rgb(27, 19, 183);
-    height: 100vh;
+    margin-bottom: -5rem;
 }
 
 
