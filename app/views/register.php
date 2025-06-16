@@ -21,7 +21,6 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     max-height: 500px;
     max-width: 600px;
     overflow: hidden;
@@ -32,6 +31,7 @@
     align-items: center;
     text-align: center;
     position: relative;
+    justify-content: space-between;
 }
 
 .logo-box img {
@@ -59,10 +59,19 @@
     transform: scale(1.75);
 }
 
+.register-box {
+    justify-content: flex-start;
+}
+
 .register-box h2 {
     font-size: 2rem;
     color: #0074D9;
     margin-bottom: 1rem;
+}
+
+.form-wrapper {
+    margin-top: auto;
+    width: 100%;
 }
 
 form {
@@ -114,14 +123,12 @@ input[type="password"] {
 }
 
 .terms {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: left;
+    display: flex;
+    align-items: center;
     font-size: 0.85rem;
-    color: black;
-    text-align: left;
     gap: 0.5rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .terms input[type="checkbox"] {
@@ -183,21 +190,21 @@ button[type="submit"]:hover {
 
     <div class="register-box">
         <h2>Register</h2>
-        <form action="index.php?page=register" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <div class="password-wrapper">
-                <input type="password" name="password" placeholder="Password" id="password" required>
-                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-            </div>
-            <div class="terms">
-                <input type="checkbox" name="terms" id="terms" required>
-                <label for="terms">
-                    I agree to the <a href="terms.php" target="_blank">Terms of Service</a>
-                </label>
+        <div class="form-wrapper">
+            <form action="index.php?page=register" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <div class="password-wrapper">
+                    <input type="password" name="password" placeholder="Password" id="password" required>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                 </div>
-            <button type="submit">Register</button>
-        </form>
+<div class="terms">
+    <input type="checkbox" name="terms" id="terms" required>
+    <span>I agree to the <a href="terms.php" target="_blank">Terms of Service</a></span>
+</div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
     </div>
 </div>
 
