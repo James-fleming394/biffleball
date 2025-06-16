@@ -121,7 +121,7 @@
                         ?>
                     </td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
-                    <td>0</td> <!-- Placeholder for Total Wins -->
+                    <td><?php echo (int) $user['total_wins']; ?></td>
                     <td>—</td> <!-- Placeholder for WAA -->
                     <td>0</td> <!-- Placeholder for SOTU -->
                     <td>
