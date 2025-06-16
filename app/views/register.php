@@ -64,13 +64,13 @@
 }
 
 .register-box h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     color: #0074D9;
     margin-bottom: 1rem;
 }
 
 .form-wrapper {
-    margin-top: auto;
+    margin-top: 12%;
     width: 100%;
 }
 
