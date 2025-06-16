@@ -43,7 +43,7 @@
 }
 
 .login-box h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     color: #0074D9;
     margin-bottom: 1rem;
 }
