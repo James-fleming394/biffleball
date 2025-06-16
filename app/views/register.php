@@ -166,6 +166,22 @@ button[type="submit"]:hover {
     background-color: #005fa3;
 }
 
+.forgot-password {
+    margin-top: 2.5rem;
+    text-align: right;
+}
+
+.forgot-password a {
+    font-size: 0.9rem;
+    color: #0074D9;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+    color: #005fa3;
+}
+
 @media (max-width: 768px) {
     .register-wrapper {
         flex-direction: column;
@@ -198,12 +214,15 @@ button[type="submit"]:hover {
                     <input type="password" name="password" placeholder="Password" id="password" required>
                     <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                 </div>
-<div class="terms">
-    <input type="checkbox" name="terms" id="terms" required>
-    <span>I agree to the <a href="terms.php" target="_blank">Terms of Service</a></span>
-</div>
+                <div class="terms">
+                    <input type="checkbox" name="terms" id="terms" required>
+                    <span>I agree to the <a href="terms.php" target="_blank">Terms of Service</a></span>
+                </div>
                 <button type="submit">Register</button>
             </form>
+            <div class="forgot-password">
+                Already have an account? <a href="index.php?page=login">Sign In</a>
+            </div>
         </div>
     </div>
 </div>
