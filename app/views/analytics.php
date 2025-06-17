@@ -116,7 +116,7 @@ th {
 }
 </style>
 
-<h2 style="text-align:center; margin-top:2rem;">Advanced Analytics</h2>
+<h2 style="text-align:center; margin-top:2rem;">📊 Advanced Analytics</h2>
 
 <div class="analytics-container">
 
