@@ -170,26 +170,32 @@ th {
 
     <!-- SOTU -->
     <section>
-        <div class="toggle-header" onclick="toggleSection(this)">
-            SOTU
-            <span class="icon">+</span>
-        </div>
-        <div class="toggle-body">
-            <div class="scroll-table-wrapper">
+    <div class="toggle-header" onclick="toggleSection(this)">
+        SOTU 
+        <span class="icon">+</span>
+    </div>
+    <div class="toggle-body">
+        <div class="scroll-table-wrapper">
+        <div style="overflow-x: auto;">
             <table>
-                <tr>
-                    <th>Username</th>
-                    <th>Strength of Teams Used</th>
-                </tr>
-                <?php foreach ($sotuStats as $row): ?>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['username']); ?></td>
-                        <td><?php echo number_format($row['sotu'], 2); ?></td>
+                        <th>Username</th>
+                        <th>SOTU (Strength of Teams Used)</th>
                     </tr>
-                <?php endforeach; ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($sotuStats as $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo number_format($row['sotu'], 2); ?>%</td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
-            </div>
         </div>
+        </div>
+    </div>
     </section>
 
     <!-- Weekly Pick Distribution -->
