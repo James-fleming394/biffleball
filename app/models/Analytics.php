@@ -86,15 +86,30 @@ class Analytics {
     }
 
     public static function getSOTUStats() {
-        global $pdo;
-        $stmt = $pdo->query("
-            SELECT users.username, ROUND(AVG(teams.win_total), 2) AS sotu
-            FROM picks
-            JOIN users ON picks.user_id = users.id
-            JOIN teams ON picks.team_id = teams.id
-            GROUP BY users.id
-            ORDER BY users.username
-        ");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    global $pdo;
+
+    $stmt = $pdo->query("
+        SELECT 
+            u.username,
+            SUM(t.wins) AS total_team_wins,
+            SUM(t.wins + t.losses) AS total_games
+        FROM picks p
+        JOIN users u ON p.user_id = u.id
+        JOIN teams t ON p.team_id = t.id
+        GROUP BY u.id
+        HAVING total_games > 0
+        ORDER BY (100 - (total_team_wins / total_games) * 100) ASC
+    ");
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Format SOTU as 100 - win %
+    foreach ($results as &$row) {
+        $winPercent = $row['total_team_wins'] / $row['total_games'];
+        $row['sotu'] = round(100 - ($winPercent * 100), 2);
+        unset($row['total_team_wins'], $row['total_games']); // clean up
+    }
+
+    return $results;
     }
 }
