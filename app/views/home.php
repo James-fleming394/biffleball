@@ -779,7 +779,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="newsletter-content" onclick="event.stopPropagation()">
         <span class="close-btn" onclick="toggleNewsletter(false)">✖</span>
         <h3>This Week’s Update</h3>
-        <img src="https://media.discordapp.net/attachments/1090992614116954263/1380141530236456990/S5-Biffle-Week-11.jpg?ex=6842cc76&is=68417af6&hm=226f440dee9b6e5628d367e8d08db745328de63a56bb3e7a657abaf90e69eea0&=&format=webp&width=458&height=648" alt="Weekly Newsletter" />
+        <img src="https://media.discordapp.net/attachments/1090992614116954263/1382567168281149552/S5-Biffle-Week-12.jpg?ex=6852dfc3&is=68518e43&hm=d45c5f6dbd4c2cf3c7febc7d4616c2fe6be9de5d979b25943fd3c45023503a87&=&format=webp&width=458&height=648" alt="Weekly Newsletter" />
         </div>
     </div>
 </section>
