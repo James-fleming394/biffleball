@@ -9,21 +9,14 @@ class AnalyticsController {
         // WAA section data
         $waaStats = Analytics::getWAAStats();
         $teams = $waaStats['teams'];
-        $userStats[$user['username']] = $stats;
-        $leagueAverages = $waaStats['leagueAverages'];
-        $availability = $waaStats['availability'];
-        $sotuStats = Analytics::getSOTUStats(); // 👈 Add this
-        $distributionData = [];
-
+        $sotuStats = Analytics::getSOTUStats();
 
         // Weekly Pick Distribution data
         $weekDistribution = $_GET['week_distribution'] ?? null;
         $distributionData = null;
-
         if ($weekDistribution) {
             $distributionData = Analytics::getWeeklyPickDistribution($weekDistribution);
         }
-
 
         include __DIR__ . '/../views/analytics.php';
     }
