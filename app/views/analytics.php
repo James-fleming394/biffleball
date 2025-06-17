@@ -26,6 +26,14 @@ section {
     align-items: center;
 }
 
+.scroll-table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
 .toggle-header .icon {
     font-weight: bold;
     font-size: 1.5rem;
@@ -105,6 +113,7 @@ th {
         <span class="icon">−</span>
     </div>
     <div class="toggle-body">
+        <div class="scroll-table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -141,6 +150,7 @@ th {
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 </section>
 
