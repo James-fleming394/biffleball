@@ -123,7 +123,7 @@
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
                     <td><?php echo (int) $user['total_wins']; ?></td>
                     <td>—</td> <!-- Placeholder for WAA -->
-                    <td>0</td> <!-- Placeholder for SOTU -->
+                    <td><?php echo number_format($user['sotu'], 2); ?>%</td>
                     <td>
                         <?php
                         $team = $user['current_team'] ?? '';
