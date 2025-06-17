@@ -175,6 +175,7 @@ th {
             <span class="icon">+</span>
         </div>
         <div class="toggle-body">
+            <div class="scroll-table-wrapper">
             <table>
                 <tr>
                     <th>Username</th>
@@ -187,6 +188,7 @@ th {
                     </tr>
                 <?php endforeach; ?>
             </table>
+            </div>
         </div>
     </section>
 
@@ -230,6 +232,7 @@ th {
             <span class="icon">+</span>
         </div>
         <div class="toggle-body">
+            <div class="scroll-table-wrapper">
             <form method="GET" action="">
                 <label for="week">Select Week:</label>
                 <select name="week" id="week">
@@ -240,6 +243,7 @@ th {
                 <button type="submit">View</button>
             </form>
             <p>Coming soon...</p>
+            </div>
         </div>
     </section>
 
@@ -250,7 +254,9 @@ th {
             <span class="icon">+</span>
         </div>
         <div class="toggle-body">
+            <div class="scroll-table-wrapper">
             <p>Coming soon...</p>
+            </div>
         </div>
     </section>
 </div>
