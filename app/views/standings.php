@@ -122,7 +122,7 @@
                     </td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
                     <td><?php echo (int) $user['total_wins']; ?></td>
-                    <td>—</td> <!-- Placeholder for WAA -->
+                    <td><?php echo number_format($user['waa'], 2); ?></td>
                     <td><?php echo number_format($user['sotu'], 2); ?>%</td>
                     <td>
                         <?php
