@@ -29,9 +29,23 @@ section {
 .scroll-table-wrapper {
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto;
     border: 1px solid #ccc;
     border-radius: 6px;
     margin-top: 1rem;
+}
+
+/* Sticky headers */
+.scroll-table-wrapper table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f4f4f4;
+    z-index: 2;
+}
+
+/* Ensure min-width for horizontal scrolling */
+.scroll-table-wrapper table {
+    min-width: 800px;
 }
 
 .toggle-header .icon {
