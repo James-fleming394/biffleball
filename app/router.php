@@ -84,6 +84,10 @@ switch ($page) {
         ApiController::updateTeamWins();
         break;
     
+    case 'home':
+        HomeController::index();
+        break;
+    
     case 'analytics':
         AnalyticsController::index();
         break;
