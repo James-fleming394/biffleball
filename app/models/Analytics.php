@@ -112,4 +112,20 @@ class Analytics {
 
     return $results;
     }
+    
+    public static function getTopPicksForWeek($week) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT t.name AS team_name, COUNT(*) AS pick_count
+        FROM picks p
+        JOIN teams t ON p.team_id = t.id
+        WHERE p.week = ?
+        GROUP BY t.id
+        ORDER BY pick_count DESC
+        LIMIT 5
+    ");
+    $stmt->execute([$week]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
