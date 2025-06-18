@@ -320,6 +320,8 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-top: 1rem;
+        width: 100%;
     }
 
     .bar {
@@ -327,6 +329,13 @@
         align-items: center;
         gap: 10px;
         overflow: hidden;
+    }
+
+    .bar-left {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 0; /* Prevents overflow */
     }
 
     .bar .label {
@@ -343,7 +352,7 @@
         margin-right: 6px;
     }
 
-    .bar .bar-fill {
+    .bar-fill {
         height: 24px;
         background-color: #0074D9;
         color: white;
@@ -352,10 +361,12 @@
         text-align: right;
         padding-right: 8px;
         border-radius: 4px;
-        min-width: 2%;
         width: 0;
+        overflow: hidden;
         transition: width 1s ease-out;
+        white-space: nowrap;
     }
+
 
     .bar .bar-fill.low {
         background-color: #d94e4e;
@@ -670,36 +681,42 @@
 
         <a class="button secondary-cta" href="index.php?page=standings">See Full Standings →</a>
 
-    <div class="weekly-recap">
-        <h4>This Week's Picks</h4>
+<div class="weekly-recap">
+    <h4>This Week's Picks</h4>
     <div class="bar-chart">
-        <div class="bar" data-width="25">
-            <img class="team-logo" src="/images/logos/dodgers.png" alt="Dodgers logo">
-            <span class="label">Dodgers</span>
-            <div class="bar-fill">25%</div>
+        <?php foreach ($topPicks as $team): ?>
+            <?php
+                $teamName = $team['team_name'] ?? '';
+                $percentage = $team['percentage'] ?? 0;
+                $customFilenames = [
+                    'red sox' => 'redsox.png',
+                    'white sox' => 'whitesox.png',
+                    'blue jays' => 'bluejays.png',
+                    'a\'s' => 'athletics.png'
+                ];
+                $key = strtolower($teamName);
+                if (isset($customFilenames[$key])) {
+                    $filename = $customFilenames[$key];
+                } else {
+                    $parts = explode(' ', strtolower($teamName));
+                    $filename = end($parts) . '.png';
+                }
+                $logoPath = "/images/logos/$filename";
+            ?>
+            <div class="bar">
+            <div class="bar-left">
+                <img class="team-logo" src="<?php echo $logoPath; ?>" alt="<?php echo htmlspecialchars($teamName); ?> logo">
+                <span class="label"><?php echo htmlspecialchars($teamName); ?></span>
+            </div>
+            <div class="bar-fill<?php echo ((int)$percentage < 5 ? ' low' : ''); ?>" data-width="<?php echo (int)$percentage; ?>%">
+            <?php echo (int)$percentage; ?>%
+            </div>
         </div>
-        <div class="bar" data-width="18">
-            <img class="team-logo" src="/images/logos/yankees.png" alt="Yankees logo">
-            <span class="label">Yankees</span>
-            <div class="bar-fill">18%</div>
-        </div>
-        <div class="bar" data-width="15">
-            <img class="team-logo" src="/images/logos/braves.png" alt="Braves logo">
-            <span class="label">Braves</span>
-            <div class="bar-fill">15%</div>
-        </div>
-        <div class="bar" data-width="10">
-            <img class="team-logo" src="/images/logos/rays.png" alt="Rays logo">
-            <span class="label">Rays</span>
-            <div class="bar-fill">10%</div>
-        </div>
-        <div class="bar low" data-width="2">
-            <img class="team-logo" src="/images/logos/As.png" alt="A's logo">
-            <span class="label">A’s</span>
-            <div class="bar-fill">2%</div>
-        </div>
+
+        <?php endforeach; ?>
     </div>
-    </div>
+</div>
+
 </section>
 
 <script>
@@ -711,8 +728,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (entry.isIntersecting) {
                 const bar = entry.target;
                 const fill = bar.querySelector('.bar-fill');
-                const width = bar.getAttribute('data-width');
-                fill.style.width = width + '%';
+                const targetWidth = fill.getAttribute('data-width');
+
+                if (targetWidth) {
+                    fill.style.width = targetWidth;
+                }
+
                 observer.unobserve(bar);
             }
         });
@@ -723,6 +744,8 @@ document.addEventListener("DOMContentLoaded", () => {
     bars.forEach(bar => observer.observe(bar));
 });
 </script>
+
+
 
 <section class="belt-testimonials">
     <div class="belt-testimonials-container">

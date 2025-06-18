@@ -4,6 +4,7 @@ require_once __DIR__ . '/controllers/StandingsController.php';
 require_once __DIR__ . '/controllers/PickController.php';
 require_once __DIR__ . '/controllers/ApiController.php';
 require_once __DIR__ . '/controllers/AnalyticsController.php';
+require_once __DIR__ . '/controllers/HomeController.php';
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {

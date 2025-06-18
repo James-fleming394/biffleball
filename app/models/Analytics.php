@@ -112,20 +112,36 @@ class Analytics {
 
     return $results;
     }
-    
+
     public static function getTopPicksForWeek($week) {
     global $pdo;
 
+    // First, get total number of picks that week
+    $totalStmt = $pdo->prepare("SELECT COUNT(*) as total FROM picks WHERE week = ?");
+    $totalStmt->execute([$week]);
+    $total = $totalStmt->fetchColumn();
+
+    if (!$total) return [];
+
+    // Get top 5 teams
     $stmt = $pdo->prepare("
-        SELECT t.name AS team_name, COUNT(*) AS pick_count
-        FROM picks p
-        JOIN teams t ON p.team_id = t.id
+        SELECT t.name AS team_name, COUNT(p.id) AS pick_count
+        FROM teams t
+        JOIN picks p ON p.team_id = t.id
         WHERE p.week = ?
         GROUP BY t.id
         ORDER BY pick_count DESC
         LIMIT 5
     ");
     $stmt->execute([$week]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Add percentage field to each result
+    foreach ($results as &$row) {
+        $row['percentage'] = round(($row['pick_count'] / $total) * 100);
+    }
+
+    return $results;
     }
 }
