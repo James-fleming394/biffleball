@@ -3,12 +3,10 @@
 <style>
 .standings-wrapper {
     margin-top: 0;
-    padding: 1rem; 
+    padding: 1rem;
     background: linear-gradient(135deg, rgb(27, 19, 183), rgb(110, 174, 246));
-    background-color: rgb(27, 19, 183);
     margin-bottom: -5rem;
 }
-
 
 .standings-section {
     max-width: 80%;
@@ -37,7 +35,7 @@
     color: white;
 }
 
-.standings-table th, 
+.standings-table th,
 .standings-table td {
     padding: 0.85rem 1rem;
     border: 1px solid #ddd;
@@ -84,36 +82,36 @@
         padding: 1rem;
     }
 
-    .standings-table th, 
+    .standings-table th,
     .standings-table td {
         padding: 0.6rem;
         font-size: 0.9rem;
     }
 }
-
 </style>
-<div class="standings-wrapper">
-<div class="standings-section">
-    <h2>🏆 League Standings</h2>
 
-    <table class="standings-table">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Username</th>
-                <th>Total Wins</th>
-                <th>WAA</th>
-                <th>SOTU</th>
-                <th>Team This Week</th>
-                <th>Profile</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $rank = 1;
-            foreach ($users as $user): 
-                $rowClass = $rank === 1 ? 'top1' : ($rank === 2 ? 'top2' : ($rank === 3 ? 'top3' : ''));
-            ?>
+<div class="standings-wrapper">
+    <div class="standings-section">
+        <h2>🏆 League Standings</h2>
+
+        <table class="standings-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Total Wins</th>
+                    <th>WAA</th>
+                    <th>SOTU</th>
+                    <th>Team This Week</th>
+                    <th>Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $rank = 1;
+                foreach ($users as $user): 
+                    $rowClass = $rank === 1 ? 'top1' : ($rank === 2 ? 'top2' : ($rank === 3 ? 'top3' : ''));
+                ?>
                 <tr class="<?php echo $rowClass; ?>">
                     <td>
                         <?php 
@@ -127,19 +125,10 @@
                     <td>
                         <?php
                         $team = $user['current_team'] ?? '';
-                        $customFilenames = [
-                            'red sox' => 'redsox.png',
-                            'white sox' => 'whitesox.png'
-                        ];
-
                         if ($team) {
-                            $key = strtolower($team);
-                            if (isset($customFilenames[$key])) {
-                                $filename = $customFilenames[$key];
-                            } else {
-                                $parts = explode(' ', strtolower($team));
-                                $filename = end($parts) . '.png';
-                            }
+                            // Remove city/state, convert to lowercase, remove spaces
+                            $teamNameOnly = strtolower(preg_replace('/^(arizona|atlanta|baltimore|boston|chicago|cincinnati|cleveland|colorado|detroit|houston|kansas city|los angeles|miami|milwaukee|minnesota|new york|oakland|philadelphia|pittsburgh|san diego|san francisco|seattle|st\.? louis|tampa bay|texas|toronto|washington)\s+/i', '', $team));
+                            $filename = str_replace(' ', '', $teamNameOnly) . '.png';
                             $logoPath = "/images/logos/" . $filename;
                             echo "<img src='$logoPath' alt='$team' class='team-logo'> " . htmlspecialchars($team);
                         } else {
@@ -149,15 +138,14 @@
                     </td>
                     <td>
                         <a href="index.php?page=profile&user=<?php echo urlencode($user['username']); ?>" class="profile-link">
-                        View
+                            View
                         </a>
                     </td>
                 </tr>
-            <?php $rank++; endforeach; ?>
-        </tbody>
-    </table>
-</div>
+                <?php $rank++; endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <?php include 'footer.php'; ?>
-
