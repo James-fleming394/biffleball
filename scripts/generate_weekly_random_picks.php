@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../app/config.php';
 
-$week = 25;
+$week = 26;
 
 try {
     // Get all teams
