@@ -255,6 +255,53 @@ button:hover {
     color: #0074D9;
 }
 
+.modal-schedule {
+    display: none;
+    position: fixed;
+    z-index: 9998;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-schedule-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-schedule-popup {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+#schedulePopupContent table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+#schedulePopupContent th, #schedulePopupContent td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+#schedulePopupContent th {
+    background-color: #f4f4f4;
+}
 
 </style>
 
@@ -287,7 +334,10 @@ button:hover {
                         <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
                         <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
                         <h4>Record: <?php echo $currentPick['record'] ?? '--'; ?></h4>
-                        <div class="schedule-placeholder">📅 <strong>Schedule:</strong> API integration coming soon.</div>
+                        <p><strong>Last 10 Games:</strong> 7–3</p>
+                        <p>
+                            📅 <strong><a href="#" class="open-schedule-popup" data-team="<?php echo htmlspecialchars($currentPick['team_name']); ?>">Schedule</a></strong>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -349,6 +399,33 @@ button:hover {
 </div>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('schedulePopup');
+    const closeBtn = document.querySelector('.close-schedule-popup');
+
+    document.querySelectorAll('.open-schedule-popup').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const teamName = e.target.dataset.team;
+            document.getElementById('schedulePopupTitle').textContent = `${teamName} - Full Season Schedule`;
+            popup.style.display = 'block';
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+});
+</script>
+
 
 <script>
 // Countdown to Sunday 9PM EST
@@ -484,6 +561,27 @@ function getTeamDivisionInfo($teamName) {
 <div id="submissionModal" class="modal">
     <div class="modal-content">
         <p>Your pick has been submitted! 🎉</p>
+    </div>
+</div>
+
+<!-- Schedule Modal -->
+<div id="schedulePopup" class="modal-schedule">
+    <div class="modal-schedule-content">
+        <span class="close-schedule-popup">&times;</span>
+        <h3 id="schedulePopupTitle">Full Season Schedule</h3>
+        <div id="schedulePopupContent">
+            <table>
+                <thead>
+                    <tr><th>Date</th><th>Opponent</th><th>Time</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Mar 28</td><td>@ Yankees</td><td>7:05 PM</td></tr>
+                    <tr><td>Mar 29</td><td>@ Yankees</td><td>1:10 PM</td></tr>
+                    <tr><td>Apr 1</td><td>vs Red Sox</td><td>6:40 PM</td></tr>
+                    <!-- Add or load more rows -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
