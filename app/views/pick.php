@@ -1,4 +1,11 @@
 <?php include 'header.php'; ?>
+
+<div class="background-balls">
+    <?php for ($i = 0; $i < 20; $i++): ?>
+        <span style="left: <?php echo rand(0, 100); ?>%; animation-delay: <?php echo rand(0, 20); ?>s; font-size: <?php echo rand(16, 30); ?>px;">⚾</span>
+    <?php endfor; ?>
+</div>
+
 <?php
 $nextWeek = $nextWeek ?? ((int)date('W') + 1);
 $canPickNextWeek = $canPickNextWeek ?? false;
@@ -14,6 +21,8 @@ body{
     max-width: 1100px;
     margin: 3rem auto;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .pick-container h2 {
@@ -312,6 +321,44 @@ button:hover {
 #schedulePopupContent th {
     background-color: #f4f4f4;
 }
+
+.background-balls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.background-balls span {
+    position: absolute;
+    bottom: -40px;
+    color: rgba(255, 255, 255, 0.3);
+    animation: floatUp 25s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+
 
 </style>
 
