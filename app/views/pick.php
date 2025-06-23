@@ -6,10 +6,20 @@ $canPickNextWeek = $canPickNextWeek ?? false;
 
 
 <style>
+body{
+    background: linear-gradient(to bottom right, #f0f8ff,rgb(136, 179, 245));
+}
+
 .pick-container {
     max-width: 1100px;
     margin: 3rem auto;
     text-align: center;
+}
+
+.pick-container h2 {
+    font-size: 2.2rem;
+    color: #1e3d58;
+    margin-bottom: 2rem;
 }
 
 .countdown {
@@ -142,7 +152,7 @@ $canPickNextWeek = $canPickNextWeek ?? false;
 
 .card img.team-logo {
     width: 120px;
-    height: auto;
+    height: 160px;
 }
 
 /* Team name box at bottom */

@@ -18,9 +18,9 @@
 }
 
 .standings-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #1d3557;
+    font-size: 2.2rem;
+    color: #1e3d58;
+    margin-bottom: 2rem;
 }
 
 .standings-table {
