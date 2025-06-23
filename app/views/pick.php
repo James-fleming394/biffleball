@@ -7,7 +7,7 @@ $canPickNextWeek = $canPickNextWeek ?? false;
 
 <style>
 .pick-container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 3rem auto;
     text-align: center;
 }
@@ -182,7 +182,7 @@ button:hover {
 
 .pick-sections {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 2rem;
     margin-top: 2rem;
@@ -190,10 +190,14 @@ button:hover {
 
 .current-pick-section,
 .upcoming-pick-section {
-    flex: 1 1 420px;
-    max-width: 460px;
+    flex: 1 1 45%;
+    min-width: 320px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
-
 
 .modal {
     display: none;
