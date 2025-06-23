@@ -34,6 +34,39 @@ $canPickNextWeek = $canPickNextWeek ?? false;
     border-radius: 12px;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    margin-left: 7%;
+}
+
+.card-and-schedule {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.team-schedule {
+    flex: 1 1 220px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    text-align: left;
+    min-width: 200px;
+    padding: 2.5%;
+    margin: 2.5%;
+}
+
+.schedule-list {
+    list-style: none;
+    padding: 3%;
+    margin: 3%;
+}
+
+.schedule-list li {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
 }
 
 .card:hover {
@@ -230,10 +263,12 @@ button:hover {
 
 <div class="pick-sections">
     <!-- CURRENT WEEK PICK SECTION -->
-    <div class="current-pick-section">
-        <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
+<div class="current-pick-section">
+    <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
 
-        <?php if (!empty($currentPick)): ?>
+    <?php if (!empty($currentPick)): ?>
+        <div class="card-and-schedule">
+            <!-- Card -->
             <div class="card-wrapper">
                 <div class="card">
                     <div class="card-front" style="border-color: <?php echo getTeamColor($currentPick['team_name']); ?>">
@@ -256,10 +291,25 @@ button:hover {
                     </div>
                 </div>
             </div>
-        <?php else: ?>
-            <p><strong>No pick has been made yet for this week.</strong></p>
-        <?php endif; ?>
-    </div>
+
+            <!-- Schedule -->
+            <div class="team-schedule">
+                <h4>📅 <?php echo htmlspecialchars($currentPick['team_name']); ?> Schedule: Week  <?php echo $currentPick['week']; ?></h4>
+                <ul class="schedule-list">
+                    <li>Mon: vs TBD</li>
+                    <li>Tue: at TBD</li>
+                    <li>Wed: —</li>
+                    <li>Thu: vs TBD</li>
+                    <li>Fri: at TBD</li>
+                    <li>Sat: at TBD</li>
+                    <li>Sun: vs TBD</li>
+                </ul>
+            </div>
+        </div>
+    <?php else: ?>
+        <p><strong>No pick has been made yet for this week.</strong></p>
+    <?php endif; ?>
+</div>
 
     <!-- UPCOMING WEEK PICK SECTION -->
     <div class="upcoming-pick-section">
