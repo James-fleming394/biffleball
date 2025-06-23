@@ -21,35 +21,64 @@ class Pick {
     public static function getUserPicks($userId) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name 
-                               FROM picks 
-                               JOIN teams ON picks.team_id = teams.id 
-                               WHERE picks.user_id = ? 
-                               ORDER BY picks.week DESC");
+                            FROM picks 
+                            JOIN teams ON picks.team_id = teams.id 
+                            WHERE picks.user_id = ? 
+                            ORDER BY picks.week DESC");
         $stmt->execute([$userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function getCurrentWeekPick($userId) {
-        global $pdo;
-        $week = date('W'); // Get current week
+    global $pdo;
+    $weeks = self::getActiveWeeks();
+    $week = $weeks['current'];
 
-        $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
-                               JOIN teams ON picks.team_id = teams.id 
-                               WHERE picks.user_id = ? AND picks.week = ?");
-        $stmt->execute([$userId, $week]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
+                        JOIN teams ON picks.team_id = teams.id 
+                        WHERE picks.user_id = ? AND picks.week = ?");
+    $stmt->execute([$userId, $week]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
     public static function getUpcomingWeekPick($userId) {
-        global $pdo;
-        $week = date('W') + 1; // Next week
+    global $pdo;
+    $weeks = self::getActiveWeeks();
+    $week = $weeks['upcoming'];
 
-        $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
-                               JOIN teams ON picks.team_id = teams.id 
-                               WHERE picks.user_id = ? AND picks.week = ?");
-        $stmt->execute([$userId, $week]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT picks.*, teams.name AS team_name FROM picks 
+                        JOIN teams ON picks.team_id = teams.id 
+                        WHERE picks.user_id = ? AND picks.week = ?");
+    $stmt->execute([$userId, $week]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+    public static function getActiveWeeks() {
+    // Use Eastern Time (America/New_York) for accurate lock timing
+    $dt = new DateTime('now', new DateTimeZone('America/New_York'));
+    $day = (int)$dt->format('w'); // 0 (Sun) to 6 (Sat)
+    $hour = (int)$dt->format('G'); // 0 to 23
+
+    // Lock happens at 9PM Sunday (day 0, hour >= 21)
+    $locked = ($day === 0 && $hour >= 21);
+
+    if ($locked) {
+        // If locked, the current week has closed, advance both
+        $currentWeek = (int)$dt->format('W') + 1;
+        $upcomingWeek = $currentWeek + 1;
+    } else {
+        $currentWeek = (int)$dt->format('W');
+        $upcomingWeek = $currentWeek + 1;
     }
+
+    return [
+        'current' => $currentWeek,
+        'upcoming' => $upcomingWeek,
+        'isLocked' => $locked
+    ];
+}
 
     public static function changePick($userId, $newTeamId, $week) {
         global $pdo;
