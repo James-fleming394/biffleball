@@ -31,7 +31,7 @@ class PickController {
 }
 
 
-    public static function showPicks() {
+public static function showPicks() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -52,8 +52,13 @@ class PickController {
     $currentPick = Pick::getCurrentWeekPick($userId);
     $upcomingPick = Pick::getUpcomingWeekPick($userId);
 
+    // 👇 These are what the view needs
+    $nextWeek = $upcomingWeek;
+    $canPickNextWeek = !$isLocked;
+
     include __DIR__ . '/../views/pick.php';
 }
+
 
     
     public static function changePick() {
@@ -77,7 +82,6 @@ class PickController {
         }
     }
 }
-
 }    
 
 // Handle direct requests

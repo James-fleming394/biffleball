@@ -1,4 +1,9 @@
 <?php include 'header.php'; ?>
+<?php
+$nextWeek = $nextWeek ?? ((int)date('W') + 1);
+$canPickNextWeek = $canPickNextWeek ?? false;
+?>
+
 
 <style>
 .pick-container {
@@ -202,73 +207,75 @@ button:hover {
 </style>
 
 <div class="pick-container">
-    <h2>🏟️ Pick Your Team for This Week 🏟️</h2>
+    <h2>🏟️ Biffleball Weekly Picks 🏟️</h2>
 
-    <div class="countdown" id="countdown"></div>
+    <!-- CURRENT WEEK PICK SECTION -->
+    <div>
+        <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
 
-    <?php if (!empty($currentPick)): ?>
-        <div class="card-wrapper">
-            <div class="card">
-                <div class="card-front" style="border-color: <?php echo getTeamColor($currentPick['team_name']); ?>">
-                    <div class="week-label">Week <?php echo $currentPick['week']; ?></div>
-                    <img src="/images/BiffleballPennant.png" alt="Biffleball Pennant" class="pennant-img">
-                    <div class="team-name-header"><?php echo htmlspecialchars($currentPick['team_name']); ?></div>
-                    <div class="logo-box">
-                        <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
+        <?php if (!empty($currentPick)): ?>
+            <div class="card-wrapper">
+                <div class="card">
+                    <div class="card-front" style="border-color: <?php echo getTeamColor($currentPick['team_name']); ?>">
+                        <div class="week-label">Week <?php echo $currentPick['week']; ?></div>
+                        <img src="/images/BiffleballPennant.png" alt="Biffleball Pennant" class="pennant-img">
+                        <div class="team-name-header"><?php echo htmlspecialchars($currentPick['team_name']); ?></div>
+                        <div class="logo-box">
+                            <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
+                        </div>
+                        <?php $div = getTeamDivisionInfo($currentPick['team_name']); ?>
+                        <div class="league-division"><?php echo $div['league'] . ' ' . $div['division']; ?></div>
+                        <img src="/images/mlblogo.png" class="mlb-logo" alt="MLB Logo">
                     </div>
-                    <?php $div = getTeamDivisionInfo($currentPick['team_name']); ?>
-                <div class="league-division"><?php echo $div['league'] . ' ' . $div['division']; ?></div>
-                    <img src="/images/mlblogo.png" class="mlb-logo" alt="MLB Logo">
-                </div>
-                <div class="card-back">
-                    <h3>Current Pick</h3>
-                    <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
-                    <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
-                    <h4>Record: <?php echo $currentPick['record'] ?? '--'; ?></h4>
-                    <div class="schedule-placeholder">📅 <strong>Schedule:</strong> API integration coming soon.</div>
+                    <div class="card-back">
+                        <h3>Current Pick</h3>
+                        <img src="/images/logos/<?php echo getTeamImageFilename($currentPick['team_name']); ?>" class="team-logo" alt="<?php echo htmlspecialchars($currentPick['team_name']); ?>">
+                        <p><?php echo htmlspecialchars($currentPick['team_name']); ?></p>
+                        <h4>Record: <?php echo $currentPick['record'] ?? '--'; ?></h4>
+                        <div class="schedule-placeholder">📅 <strong>Schedule:</strong> API integration coming soon.</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php else: ?>
-        <p><strong>No pick has been made yet for this week.</strong></p>
-    <?php endif; ?>
+        <?php else: ?>
+            <p><strong>No pick has been made yet for this week.</strong></p>
+        <?php endif; ?>
+    </div>
 
-    <?php if (empty($currentPick)): ?>
-        <form action="index.php?page=pick-team" method="POST" class="pick-form">
-            <label for="team_id">Select Team:</label>
-            <select name="team_id" required>
-                <option value="" disabled selected>Choose a team</option>
-                <?php foreach ($teams as $team): ?>
-                    <option value="<?php echo $team['id']; ?>"><?php echo htmlspecialchars($team['name']); ?></option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit">Submit Pick</button>
-        </form>
-    <?php endif; ?>
+    <!-- UPCOMING WEEK PICK SECTION -->
+    <div style="margin-top: 4rem;">
+        <h3>Week <?php echo $nextWeek; ?> — Upcoming Pick</h3>
 
-    <?php
-        $cutoffTimestamp = strtotime('next sunday 9pm');
-        $now = time();
-        $canChangePick = $now < $cutoffTimestamp;
-    ?>
+        <div class="countdown" id="countdown"></div>
 
-    <?php if (!empty($currentPick) && $canChangePick): ?>
-        <h3>Change Your Pick</h3>
-        <form action="index.php?page=change-pick" method="POST" class="pick-form">
-            <label for="new_team_id">Change to:</label>
-            <select name="new_team_id" required>
-                <option value="" disabled selected>Choose a new team</option>
-                <?php foreach ($teams as $team): ?>
-                    <?php if ($team['id'] !== $currentPick['team_id']): ?>
+        <?php if (empty($nextPick) && $canPickNextWeek): ?>
+            <form action="index.php?page=pick-team" method="POST" class="pick-form">
+                <label for="team_id">Select Team:</label>
+                <select name="team_id" required>
+                    <option value="" disabled selected>Choose a team</option>
+                    <?php foreach ($teams as $team): ?>
                         <option value="<?php echo $team['id']; ?>"><?php echo htmlspecialchars($team['name']); ?></option>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit">Change Pick</button>
-        </form>
-    <?php elseif (!empty($currentPick)): ?>
-        <p><em>You can no longer change your pick (deadline passed).</em></p>
-    <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit">Submit Pick</button>
+            </form>
+        <?php elseif (!empty($nextPick) && $canPickNextWeek): ?>
+            <h4>Your current pick: <?php echo htmlspecialchars($nextPick['team_name']); ?></h4>
+            <form action="index.php?page=change-pick" method="POST" class="pick-form">
+                <label for="new_team_id">Change to:</label>
+                <select name="new_team_id" required>
+                    <option value="" disabled selected>Choose a new team</option>
+                    <?php foreach ($teams as $team): ?>
+                        <?php if ($team['id'] !== $nextPick['team_id']): ?>
+                            <option value="<?php echo $team['id']; ?>"><?php echo htmlspecialchars($team['name']); ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit">Change Pick</button>
+            </form>
+        <?php elseif (!$canPickNextWeek): ?>
+            <p><strong>Picks Locked for Week <?php echo $nextWeek; ?> ⛔</strong></p>
+        <?php endif; ?>
+    </div>
 </div>
 
 <script>
@@ -285,9 +292,8 @@ function updateCountdown() {
     const seconds = Math.floor((diff / 1000) % 60);
 
     document.getElementById("countdown").textContent =
-        `⏳ Picks Locked in: ${hours}h ${minutes}m ${seconds}s ⏳`;
+        `⏳ Picks Lock In: ${hours}h ${minutes}m ${seconds}s ⏳`;
 }
-
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
