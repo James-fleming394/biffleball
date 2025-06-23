@@ -180,6 +180,21 @@ button:hover {
     border-radius: 4px;
 }
 
+.pick-sections {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.current-pick-section,
+.upcoming-pick-section {
+    flex: 1 1 420px;
+    max-width: 460px;
+}
+
+
 .modal {
     display: none;
     position: fixed;
@@ -209,8 +224,9 @@ button:hover {
 <div class="pick-container">
     <h2>🏟️ Biffleball Weekly Picks 🏟️</h2>
 
+<div class="pick-sections">
     <!-- CURRENT WEEK PICK SECTION -->
-    <div>
+    <div class="current-pick-section">
         <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
 
         <?php if (!empty($currentPick)): ?>
@@ -242,7 +258,7 @@ button:hover {
     </div>
 
     <!-- UPCOMING WEEK PICK SECTION -->
-    <div style="margin-top: 4rem;">
+    <div class="upcoming-pick-section">
         <h3>Week <?php echo $nextWeek; ?> — Upcoming Pick</h3>
 
         <div class="countdown" id="countdown"></div>
@@ -276,6 +292,8 @@ button:hover {
             <p><strong>Picks Locked for Week <?php echo $nextWeek; ?> ⛔</strong></p>
         <?php endif; ?>
     </div>
+</div>
+
 </div>
 
 <script>
