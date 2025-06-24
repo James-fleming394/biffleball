@@ -119,6 +119,11 @@ th {
     transform: rotate(180deg);
     margin-top: 4px;
 }
+
+.ending {
+    margin-bottom: 5rem;
+}
+
 </style>
 
 <h2 style="text-align:center; margin-top:2rem;">📊 Advanced Analytics</h2>
@@ -270,6 +275,8 @@ th {
             </div>
         </div>
     </section>
+    <div class=ending>
+    </div>
 </div>
 
 <script>
