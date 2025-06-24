@@ -14,6 +14,11 @@ section {
     overflow: hidden;
 }
 
+h2 {
+    font-size: 2.2rem;
+    color: #1e3d58;
+}
+
 .toggle-header {
     background-color: #0074D9;
     color: white;
