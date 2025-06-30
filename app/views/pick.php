@@ -238,6 +238,7 @@ button:hover {
     flex-wrap: wrap;
     gap: 2rem;
     margin-top: 2rem;
+    margin-bottom: 10rem;
 }
 
 .current-pick-section,
@@ -368,7 +369,11 @@ button:hover {
 <div class="pick-sections">
     <!-- CURRENT WEEK PICK SECTION -->
 <div class="current-pick-section">
-    <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
+    <?php if (!empty($currentPick) && is_array($currentPick)): ?>
+        <h3>Week <?php echo $currentPick['week']; ?> — Locked Pick</h3>
+    <?php else: ?>
+        <h3>Pick Needed for This Week</h3>
+    <?php endif; ?>
 
     <?php if (!empty($currentPick)): ?>
         <div class="card-and-schedule">
