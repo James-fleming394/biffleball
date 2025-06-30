@@ -144,4 +144,17 @@ class Analytics {
 
     return $results;
     }
+
+    public static function getWeeksWithPicks() {
+    global $pdo;
+
+    $stmt = $pdo->query("
+            SELECT DISTINCT week
+            FROM picks
+            ORDER BY week ASC
+        ");
+    
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
 }

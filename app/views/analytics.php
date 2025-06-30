@@ -208,38 +208,45 @@ th {
     </div>
     </section>
 
-    <!-- Weekly Pick Distribution -->
-    <section>
-        <div class="toggle-header" onclick="toggleSection(this)">
-            Weekly Pick Distribution
-            <span class="icon">+</span>
-        </div>
-        <div class="toggle-body">
-            <form method="GET" action="">
-                <label for="week_distribution">Select Week:</label>
-                <select name="week_distribution" id="week_distribution" onchange="this.form.submit()">
-                    <?php for ($w = 1; $w <= 26; $w++): ?>
-                        <option value="<?php echo $w; ?>" <?php echo (isset($_GET['week_distribution']) && $_GET['week_distribution'] == $w) ? 'selected' : ''; ?>>
-                            Week <?php echo $w; ?>
-                        </option>
-                    <?php endfor; ?>
-                </select>
-            </form>
+<!-- Weekly Pick Distribution -->
+<section>
+    <div class="toggle-header" onclick="toggleSection(this)">
+        Weekly Pick Distribution
+        <span class="icon">+</span>
+    </div>
+    <div class="toggle-body">
+        <form method="GET" action="">
+            <label for="week_distribution">Select Week:</label>
+            <select name="week_distribution" id="week_distribution" onchange="this.form.submit()">
+    <?php foreach ($weeksWithPicks as $week): ?>
+        <option value="<?php echo $week; ?>" <?php echo ($selectedWeek == $week) ? 'selected' : ''; ?>>
+            Week <?php echo $week; ?>
+        </option>
+    <?php endforeach; ?>
+</select>
 
-            <?php if (!empty($distributionData)): ?>
-                <div class="bar-chart">
-                    <?php foreach ($distributionData as $team => $count): ?>
-                        <div class="bar" style="height: <?php echo $count * 20; ?>px;">
-                            <div><?php echo $count; ?></div>
-                            <div class="bar-label"><?php echo htmlspecialchars($team); ?></div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <p>No pick data available for selected week.</p>
-            <?php endif; ?>
-        </div>
-    </section>
+        </form>
+
+        <?php if (!empty($distributionData)): ?>
+            <h4 style="margin-top: 1rem;">Team Picks for Week <?php echo $selectedWeek; ?></h4>
+            <div class="bar-chart">
+                <?php
+                // Sort by most-picked teams
+                arsort($distributionData);
+                foreach ($distributionData as $team => $count):
+                ?>
+                    <div class="bar" style="height: <?php echo $count * 20; ?>px;">
+                        <div class="bar-count"><?php echo $count; ?></div>
+                        <div class="bar-label"><?php echo htmlspecialchars($team); ?></div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p>No pick data available for selected week.</p>
+        <?php endif; ?>
+    </div>
+</section>
+
 
     <!-- MLB Weekly Win Totals -->
     <section>
