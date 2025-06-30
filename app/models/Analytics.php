@@ -149,9 +149,9 @@ class Analytics {
     global $pdo;
 
     $stmt = $pdo->query("
-            SELECT DISTINCT week
-            FROM picks
-            ORDER BY week ASC
+        SELECT DISTINCT week
+        FROM picks
+        ORDER BY week ASC
         ");
     
         return $stmt->fetchAll(PDO::FETCH_COLUMN);

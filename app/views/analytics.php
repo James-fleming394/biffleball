@@ -215,39 +215,20 @@ th {
         <span class="icon">+</span>
     </div>
     <div class="toggle-body">
-        <div id="weekly-pick-distribution">
-            <label for="week_distribution">Select Week:</label>
-            <select id="week_distribution">
-                <?php foreach ($weeksWithPicks as $week): ?>
-                    <option value="<?php echo $week; ?>" <?php echo ($selectedWeek == $week) ? 'selected' : ''; ?>>
-                        Week <?php echo $week; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+        <label for="week_distribution">Select Week:</label>
+        <select id="week_distribution">
+            <?php foreach ($weeksWithPicks as $week): ?>
+                <option value="<?php echo $week; ?>" <?php echo ($selectedWeek == $week) ? 'selected' : ''; ?>>
+                    Week <?php echo $week; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
 
-            <div id="bar-chart-container">
-                <?php if (!empty($distributionData)): ?>
-                    <h4 style="margin-top: 1rem;">Team Picks for Week <?php echo $selectedWeek; ?></h4>
-                    <div class="bar-chart">
-                        <?php
-                        arsort($distributionData);
-                        foreach ($distributionData as $team => $count):
-                        ?>
-                            <div class="bar" style="height: <?php echo $count * 20; ?>px;">
-                                <div class="bar-count"><?php echo $count; ?></div>
-                                <div class="bar-label"><?php echo htmlspecialchars($team); ?></div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <p>No pick data available for selected week.</p>
-                <?php endif; ?>
-            </div>
+        <div id="bar-chart-container">
+            
         </div>
     </div>
 </section>
-
-
 
     <!-- MLB Weekly Win Totals -->
     <section>
@@ -297,37 +278,47 @@ function toggleSection(headerEl) {
 </script>
 
 <script>
-document.getElementById('week_distribution').addEventListener('change', function () {
-    const week = this.value;
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdown = document.getElementById('week_distribution');
+    const container = document.getElementById('bar-chart-container');
 
-    fetch(`index.php?page=get-weekly-distribution&week=${week}`)
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('bar-chart-container');
-            if (!data.length) {
-                container.innerHTML = '<p>No pick data available for selected week.</p>';
-                return;
-            }
+    function fetchData(week) {
+        fetch(`index.php?page=get-weekly-distribution&week=${week}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.length) {
+                    container.innerHTML = '<p>No pick data available for selected week.</p>';
+                    return;
+                }
 
-            let html = `<h4 style="margin-top: 1rem;">Team Picks for Week ${week}</h4>`;
-            html += '<div class="bar-chart">';
-            data.sort((a, b) => b.pick_count - a.pick_count);
-            data.forEach(team => {
-                html += `
-                    <div class="bar" style="height: ${team.pick_count * 20}px;">
-                        <div class="bar-count">${team.pick_count}</div>
-                        <div class="bar-label">${team.team_name}</div>
-                    </div>
-                `;
+                let html = `<h4 style="margin-top: 1rem;">Team Picks for Week ${week}</h4>`;
+                html += '<div class="bar-chart">';
+                data.sort((a, b) => b.pick_count - a.pick_count);
+                data.forEach(team => {
+                    html += `
+                        <div class="bar" style="height: ${team.pick_count * 20}px;">
+                            <div class="bar-count">${team.pick_count}</div>
+                            <div class="bar-label">${team.team_name}</div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            })
+            .catch(err => {
+                container.innerHTML = '<p>Error loading data.</p>';
+                console.error(err);
             });
-            html += '</div>';
-            container.innerHTML = html;
-        })
-        .catch(err => {
-            console.error('Error loading distribution data:', err);
-        });
+    }
+
+    dropdown.addEventListener('change', () => {
+        fetchData(dropdown.value);
+    });
+
+    fetchData(dropdown.value); // initial load
 });
 </script>
+
 
 
 <?php include 'footer.php'; ?>

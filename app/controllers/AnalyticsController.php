@@ -13,32 +13,28 @@ class AnalyticsController {
 
         // Weekly Pick Distribution dropdown
         $weeksWithPicks = Analytics::getWeeksWithPicks();
+        $selectedWeek = $_GET['week_distribution'] ?? null;
 
-        if (isset($_GET['week_distribution'])) {
-            $selectedWeek = intval($_GET['week_distribution']);
-        } elseif (!empty($weeksWithPicks)) {
-            $selectedWeek = max($weeksWithPicks); // default to most recent week with picks
-        } else {
-            $selectedWeek = 1;
+        $distributionData = null;
+        if ($selectedWeek) {
+            $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
         }
 
-    $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
-
-    include __DIR__ . '/../views/analytics.php';
-}
-
+        include __DIR__ . '/../views/analytics.php';
+    }
 
     public static function getWeeklyDistributionAjax() {
-        if (!isset($_GET['week'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Missing week']);
-            return;
-        }
-
-        $week = intval($_GET['week']);
-        $data = Analytics::getWeeklyPickDistribution($week);
-
-        header('Content-Type: application/json');
-        echo json_encode($data);
+    if (!isset($_GET['week'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing week']);
+        return;
     }
+
+    $week = intval($_GET['week']);
+    $data = Analytics::getWeeklyPickDistribution($week);
+
+    header('Content-Type: application/json');
+    echo json_encode($data);
+}
+
 }
