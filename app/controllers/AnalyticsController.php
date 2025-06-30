@@ -13,7 +13,7 @@ class AnalyticsController {
 
         // Weekly Pick Distribution dropdown
         $weeksWithPicks = Analytics::getWeeksWithPicks();
-        $selectedWeek = $_GET['week_distribution'] ?? null;
+        $selectedWeek = $_GET['week_distribution'] ?? date('W');
 
         $distributionData = null;
         if ($selectedWeek) {
@@ -36,6 +36,6 @@ class AnalyticsController {
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-    
+
 }
 

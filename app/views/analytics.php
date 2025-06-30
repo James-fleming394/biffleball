@@ -215,37 +215,38 @@ th {
         <span class="icon">+</span>
     </div>
     <div class="toggle-body">
-        <form method="GET" action="">
+        <div id="weekly-pick-distribution">
             <label for="week_distribution">Select Week:</label>
-            <select name="week_distribution" id="week_distribution" onchange="this.form.submit()">
-    <?php foreach ($weeksWithPicks as $week): ?>
-        <option value="<?php echo $week; ?>" <?php echo ($selectedWeek == $week) ? 'selected' : ''; ?>>
-            Week <?php echo $week; ?>
-        </option>
-    <?php endforeach; ?>
-</select>
-
-        </form>
-
-        <?php if (!empty($distributionData)): ?>
-            <h4 style="margin-top: 1rem;">Team Picks for Week <?php echo $selectedWeek; ?></h4>
-            <div class="bar-chart">
-                <?php
-                // Sort by most-picked teams
-                arsort($distributionData);
-                foreach ($distributionData as $team => $count):
-                ?>
-                    <div class="bar" style="height: <?php echo $count * 20; ?>px;">
-                        <div class="bar-count"><?php echo $count; ?></div>
-                        <div class="bar-label"><?php echo htmlspecialchars($team); ?></div>
-                    </div>
+            <select id="week_distribution">
+                <?php foreach ($weeksWithPicks as $week): ?>
+                    <option value="<?php echo $week; ?>" <?php echo ($selectedWeek == $week) ? 'selected' : ''; ?>>
+                        Week <?php echo $week; ?>
+                    </option>
                 <?php endforeach; ?>
+            </select>
+
+            <div id="bar-chart-container">
+                <?php if (!empty($distributionData)): ?>
+                    <h4 style="margin-top: 1rem;">Team Picks for Week <?php echo $selectedWeek; ?></h4>
+                    <div class="bar-chart">
+                        <?php
+                        arsort($distributionData);
+                        foreach ($distributionData as $team => $count):
+                        ?>
+                            <div class="bar" style="height: <?php echo $count * 20; ?>px;">
+                                <div class="bar-count"><?php echo $count; ?></div>
+                                <div class="bar-label"><?php echo htmlspecialchars($team); ?></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p>No pick data available for selected week.</p>
+                <?php endif; ?>
             </div>
-        <?php else: ?>
-            <p>No pick data available for selected week.</p>
-        <?php endif; ?>
+        </div>
     </div>
 </section>
+
 
 
     <!-- MLB Weekly Win Totals -->
@@ -294,5 +295,39 @@ function toggleSection(headerEl) {
     headerEl.querySelector('.icon').textContent = isOpen ? '+' : '−';
 }
 </script>
+
+<script>
+document.getElementById('week_distribution').addEventListener('change', function () {
+    const week = this.value;
+
+    fetch(`index.php?page=get-weekly-distribution&week=${week}`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('bar-chart-container');
+            if (!data.length) {
+                container.innerHTML = '<p>No pick data available for selected week.</p>';
+                return;
+            }
+
+            let html = `<h4 style="margin-top: 1rem;">Team Picks for Week ${week}</h4>`;
+            html += '<div class="bar-chart">';
+            data.sort((a, b) => b.pick_count - a.pick_count);
+            data.forEach(team => {
+                html += `
+                    <div class="bar" style="height: ${team.pick_count * 20}px;">
+                        <div class="bar-count">${team.pick_count}</div>
+                        <div class="bar-label">${team.team_name}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        })
+        .catch(err => {
+            console.error('Error loading distribution data:', err);
+        });
+});
+</script>
+
 
 <?php include 'footer.php'; ?>
