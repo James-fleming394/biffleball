@@ -92,6 +92,11 @@ switch ($page) {
     case 'analytics':
         AnalyticsController::index();
         break;
+
+    case 'get-weekly-distribution':
+        AnalyticsController::getWeeklyDistributionAjax();
+        break;
+
         
     default:
         include __DIR__ . '/views/home.php';
