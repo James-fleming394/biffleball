@@ -22,5 +22,20 @@ class AnalyticsController {
 
         include __DIR__ . '/../views/analytics.php';
     }
+
+    public static function getWeeklyDistributionAjax() {
+        if (!isset($_GET['week'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing week']);
+            return;
+        }
+
+        $week = intval($_GET['week']);
+        $data = Analytics::getWeeklyPickDistribution($week);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+    
 }
 
