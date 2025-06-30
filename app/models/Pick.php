@@ -102,5 +102,20 @@ class Pick {
         $stmt->execute([$userId, $week]);
         return $stmt->rowCount() > 0;
     }
+
+    public static function getPickCountsByTeamForWeek($week) {
+        $db = Database::connect();
+        $stmt = $db->prepare("
+            SELECT t.name AS team_name, COUNT(p.id) AS pick_count
+            FROM picks p
+            JOIN teams t ON p.team_id = t.id
+            WHERE p.week = ?
+            GROUP BY p.team_id
+            ORDER BY pick_count DESC
+        ");
+        $stmt->execute([$week]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
