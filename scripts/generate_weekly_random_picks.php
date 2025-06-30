@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../app/config.php';
 
-$week = 26;
+$week = 27; // Set the week for which to generate picks
 
 try {
     // Get all teams
