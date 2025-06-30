@@ -13,15 +13,20 @@ class AnalyticsController {
 
         // Weekly Pick Distribution dropdown
         $weeksWithPicks = Analytics::getWeeksWithPicks();
-        $selectedWeek = $_GET['week_distribution'] ?? date('W');
 
-        $distributionData = null;
-        if ($selectedWeek) {
-            $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
+        if (isset($_GET['week_distribution'])) {
+            $selectedWeek = intval($_GET['week_distribution']);
+        } elseif (!empty($weeksWithPicks)) {
+            $selectedWeek = max($weeksWithPicks); // default to most recent week with picks
+        } else {
+            $selectedWeek = 1;
         }
 
-        include __DIR__ . '/../views/analytics.php';
-    }
+    $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
+
+    include __DIR__ . '/../views/analytics.php';
+}
+
 
     public static function getWeeklyDistributionAjax() {
         if (!isset($_GET['week'])) {
