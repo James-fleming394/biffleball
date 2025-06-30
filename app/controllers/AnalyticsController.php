@@ -11,12 +11,13 @@ class AnalyticsController {
         $teams = $waaStats['teams'];
         $sotuStats = Analytics::getSOTUStats();
 
-        // Weekly Pick Distribution data
-        $weekDistribution = $_GET['week_distribution'] ?? null;
-        $distributionData = null;
-        if ($weekDistribution) {
-            $distributionData = Analytics::getWeeklyPickDistribution($weekDistribution);
-        }
+        // Weekly Pick Distribution logic
+        $availableWeeks = Analytics::getWeeksWithPicks(); // Returns array of weeks with picks
+
+        // Use selected week from dropdown or default to most recent week
+        $selectedWeek = $_GET['week_distribution'] ?? max($availableWeeks ?? [1]);
+
+        $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
 
         include __DIR__ . '/../views/analytics.php';
     }
