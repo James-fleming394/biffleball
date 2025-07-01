@@ -232,23 +232,25 @@ th {
 
     <!-- MLB Weekly Win Totals -->
     <section>
-        <div class="toggle-header" onclick="toggleSection(this)">
+    <div class="toggle-header" onclick="toggleSection(this)">
             MLB Weekly Win Totals
             <span class="icon">+</span>
         </div>
         <div class="toggle-body">
             <div class="scroll-table-wrapper">
-            <form method="GET" action="">
-                <label for="week">Select Week:</label>
-                <select name="week" id="week">
+                <label for="mlb_week_select">Select Week:</label>
+                <select id="mlb_week_select">
                     <?php for ($w = 1; $w <= 26; $w++): ?>
-                        <option value="<?php echo $w; ?>">Week <?php echo $w; ?></option>
+                        <option value="<?php echo $w; ?>" <?php echo ($selectedWeek == $w) ? 'selected' : ''; ?>>
+                            Week <?php echo $w; ?>
+                        </option>
                     <?php endfor; ?>
                 </select>
-                <button type="submit">View</button>
-            </form>
-            <p>Coming soon...</p>
+
+            <div id="mlb-weekly-win-table" style="margin-top: 1rem;">
+                <p>Select a week to view win totals.</p>
             </div>
+        </div>
         </div>
     </section>
 
@@ -319,6 +321,34 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<script>
+document.getElementById('mlb_week_select').addEventListener('change', function () {
+    const week = this.value;
+    const container = document.getElementById('mlb-weekly-win-table');
+
+    fetch(`index.php?page=get-weekly-win-totals&week=${week}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.length) {
+                container.innerHTML = '<p>No data available for this week.</p>';
+                return;
+            }
+
+            let html = '<table class="analytics-table">';
+            html += '<thead><tr><th>Team</th><th>Wins</th></tr></thead><tbody>';
+            data.forEach(row => {
+                html += `<tr><td>${row.team_name}</td><td>${row.wins}</td></tr>`;
+            });
+            html += '</tbody></table>';
+
+            container.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error fetching weekly win totals:', error);
+            container.innerHTML = '<p>Error loading data.</p>';
+        });
+});
+</script>
 
 
 <?php include 'footer.php'; ?>
