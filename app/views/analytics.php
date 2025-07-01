@@ -91,34 +91,52 @@ th {
     font-weight: bold;
 }
 
+#bar-chart-container {
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
 .bar-chart {
     display: flex;
     align-items: flex-end;
-    height: 200px;
-    gap: 8px;
-    margin-top: 1rem;
+    gap: 10px;
+    height: 250px;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     padding-left: 10px;
 }
 
 .bar {
-    width: 30px;
-    background-color: #0074D9;
-    color: white;
-    text-align: center;
-    font-size: 0.75rem;
-    border-radius: 4px 4px 0 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: flex-end;
+    width: 30px;
+    position: relative;
+}
+
+.bar-fill {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+}
+
+.bar-count {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: black;
 }
 
 .bar-label {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    margin-top: 4px;
+    font-size: 0.75rem;
+    margin-top: 6px;
+    text-align: center;
+    white-space: nowrap;
 }
+
+
 
 .ending {
     margin-bottom: 5rem;
@@ -208,7 +226,7 @@ th {
     </div>
     </section>
 
-<!-- Weekly Pick Distribution -->
+    <!-- Weekly Pick Distribution -->
 <section>
     <div class="toggle-header" onclick="toggleSection(this)">
         Weekly Pick Distribution
@@ -224,9 +242,7 @@ th {
             <?php endforeach; ?>
         </select>
 
-        <div id="bar-chart-container">
-            
-        </div>
+        <div id="bar-chart-container"></div>
     </div>
 </section>
 
@@ -312,6 +328,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const dropdown = document.getElementById('week_distribution');
     const container = document.getElementById('bar-chart-container');
 
+    const teamColors = {
+        BAL: '#df4601', ARI: '#a71930', LAD: '#005a9c', TOR: '#134a8e', CHW: '#27251f',
+        SEA: '#0c2c56', ATL: '#ce1141', SFG: '#fd5a1e', HOU: '#002d62', MIA: '#00a3e0',
+        MIN: '#002b5c', COL: '#33006f', NYY: '#003087', NYM: '#002d72', SDP: '#2f241d',
+        CIN: '#c6011f', CLE: '#00385d', CHC: '#0e3386', OAK: '#003831', PHI: '#e81828',
+        STL: '#c41e3a', BOS: '#bd3039', TEX: '#003278', MIL: '#12284b', DET: '#0c2340',
+        KCR: '#004687', WSN: '#ab0003', LAA: '#ba0021', TBR: '#092c5c', PIT: '#000000'
+    };
+
+    const abbreviationMap = {
+        "Baltimore Orioles": "BAL", "Arizona Diamondbacks": "ARI", "Los Angeles Dodgers": "LAD",
+        "Toronto Blue Jays": "TOR", "Chicago White Sox": "CHW", "Seattle Mariners": "SEA",
+        "Atlanta Braves": "ATL", "San Francisco Giants": "SF", "Houston Astros": "HOU",
+        "Miami Marlins": "MIA", "Minnesota Twins": "MIN", "Colorado Rockies": "COL",
+        "New York Yankees": "NYY", "New York Mets": "NYM", "San Diego Padres": "SD",
+        "Cincinnati Reds": "CIN", "Cleveland Guardians": "CLE", "Chicago Cubs": "CHC",
+        "Oakland Athletics": "OAK", "Philadelphia Phillies": "PHI", "St. Louis Cardinals": "STL",
+        "Boston Red Sox": "BOS", "Tampa Bay Rays": "TB", "Texas Rangers": "TEX",
+        "Los Angeles Angels": "LAA", "Pittsburgh Pirates": "PIT", "Washington Nationals": "WAS",
+        "Kansas City Royals": "KC", "Milwaukee Brewers": "MIL", "Detroit Tigers": "DET"
+    };
+
+    function getColor(abbr) {
+        return teamColors[abbr] || '#0074D9';
+    }
+
     function fetchData(week) {
         fetch(`index.php?page=get-weekly-distribution&week=${week}`)
             .then(res => res.json())
@@ -324,14 +366,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 let html = `<h4 style="margin-top: 1rem;">Team Picks for Week ${week}</h4>`;
                 html += '<div class="bar-chart">';
                 data.sort((a, b) => b.pick_count - a.pick_count);
+
                 data.forEach(team => {
+                    const abbr = team.abbreviation || abbreviationMap[team.team_name] || team.team_name;
+                    const color = getColor(abbr);
+                    const height = team.pick_count * 10;
+
                     html += `
-                        <div class="bar" style="height: ${team.pick_count * 20}px;">
+                        <div class="bar" title="${team.team_name}">
                             <div class="bar-count">${team.pick_count}</div>
-                            <div class="bar-label">${team.team_name}</div>
+                            <div class="bar-fill" style="height: ${height}px; background-color: ${color};"></div>
+                            <div class="bar-label">${abbr}</div>
                         </div>
                     `;
                 });
+
                 html += '</div>';
                 container.innerHTML = html;
             })
