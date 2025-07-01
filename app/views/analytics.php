@@ -438,11 +438,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Animate bars after a short delay
                 setTimeout(() => {
-                    document.querySelectorAll('.bar-fill').forEach(el => {
-                        const finalHeight = el.getAttribute('data-height');
-                        el.style.height = `${finalHeight}px`;
-                    });
-                }, 50);
+                    document.querySelectorAll('.bar-fill').forEach((el, i) => {
+                    const finalHeight = el.getAttribute('data-height');
+                setTimeout(() => {
+                    el.style.height = `${finalHeight}px`;
+            }, i * 50); 
+            });
+            }, 50);
             })
             .catch(err => {
                 container.innerHTML = '<p>Error loading data.</p>';
