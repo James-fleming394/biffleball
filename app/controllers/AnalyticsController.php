@@ -6,22 +6,30 @@ require_once __DIR__ . '/../models/Analytics.php';
 
 class AnalyticsController {
     public static function index() {
-        // WAA section data
-        $waaStats = Analytics::getWAAStats();
-        $teams = $waaStats['teams'];
-        $sotuStats = Analytics::getSOTUStats();
+    // WAA section data
+    $waaStats = Analytics::getWAAStats();
+    $teams = $waaStats['teams'];
+    $sotuStats = Analytics::getSOTUStats();
 
-        // Weekly Pick Distribution dropdown
-        $weeksWithPicks = Analytics::getWeeksWithPicks();
-        $selectedWeek = $_GET['week_distribution'] ?? null;
+    // Weekly Pick Distribution dropdown
+    $weeksWithPicks = Analytics::getWeeksWithPicks();
 
-        $distributionData = null;
-        if ($selectedWeek) {
-            $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
-        }
-
-        include __DIR__ . '/../views/analytics.php';
+    if (isset($_GET['week_distribution'])) {
+        $selectedWeek = intval($_GET['week_distribution']);
+    } elseif (!empty($weeksWithPicks)) {
+        $selectedWeek = max($weeksWithPicks); // Default to most recent week
+    } else {
+        $selectedWeek = 1;
     }
+
+    $distributionData = Analytics::getWeeklyPickDistribution($selectedWeek);
+
+    // Users Picks by Week
+    $teamsUsedData = Analytics::getUserPicksByWeek();
+
+    include __DIR__ . '/../views/analytics.php';
+}
+
 
     public static function getWeeklyDistributionAjax() {
     if (!isset($_GET['week'])) {
