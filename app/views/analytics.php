@@ -119,9 +119,12 @@ th {
 
 .bar-fill {
     width: 100%;
+    height: 0; 
     border-radius: 4px 4px 0 0;
-    transition: height 0.3s ease;
+    transition: height 0.6s ease-out;
+    background-color: #0074D9;
 }
+
 
 .bar-count {
     font-size: 0.75rem;
@@ -424,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     html += `
                         <div class="bar" title="${team.team_name}">
                             <div class="bar-count">${team.pick_count}</div>
-                            <div class="bar-fill" style="height: ${height}px; background-color: ${color};"></div>
+                            <div class="bar-fill" style="background-color: ${color};" data-height="${height}"></div>
                             <div class="bar-label">${abbr}</div>
                         </div>
                     `;
@@ -432,6 +435,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 html += '</div>';
                 container.innerHTML = html;
+
+                // Animate bars after a short delay
+                setTimeout(() => {
+                    document.querySelectorAll('.bar-fill').forEach(el => {
+                        const finalHeight = el.getAttribute('data-height');
+                        el.style.height = `${finalHeight}px`;
+                    });
+                }, 50);
             })
             .catch(err => {
                 container.innerHTML = '<p>Error loading data.</p>';
@@ -444,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     fetchData(dropdown.value); // initial load
-});
+    });
 </script>
 
 <script>
