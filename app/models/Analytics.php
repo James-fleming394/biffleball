@@ -157,4 +157,19 @@ class Analytics {
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
+    public static function getMLBWeeklyWinTotals($week) {
+        global $pdo;
+
+        $stmt = $pdo->prepare("
+            SELECT t.name AS team_name, t.abbreviation, tw.wins
+            FROM team_weekly_wins tw
+            JOIN teams t ON tw.team_id = t.id
+            WHERE tw.week = ?
+            ORDER BY tw.wins DESC
+        ");
+        $stmt->execute([$week]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
