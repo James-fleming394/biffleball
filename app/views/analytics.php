@@ -64,6 +64,10 @@ h2 {
     animation: fadeIn 0.4s ease-in-out;
 }
 
+.toggle-body.open {
+    display: block;
+}
+
 section.open .toggle-body {
     display: block;
 }
@@ -124,7 +128,6 @@ th {
     transition: height 0.6s ease-out;
     background-color: #0074D9;
 }
-
 
 .bar-count {
     font-size: 0.75rem;
@@ -367,13 +370,35 @@ th {
 </div>
 
 <script>
-function toggleSection(headerEl) {
-    const section = headerEl.parentElement;
-    const isOpen = section.classList.contains('open');
-    section.classList.toggle('open');
-    headerEl.querySelector('.icon').textContent = isOpen ? '+' : '−';
+let hasLoadedChart = false;
+
+function toggleSection(header) {
+    const section = header.closest('section'); // Get the full section wrapper
+    const body = section.querySelector('.toggle-body');
+    const icon = header.querySelector('.icon');
+
+    const isOpen = section.classList.toggle('open'); // Toggle the section open/closed
+    icon.textContent = isOpen ? '−' : '+';
+
+    // Only animate chart if this is the Weekly Pick Distribution section
+    if (isOpen && section.contains(document.getElementById('bar-chart-container'))) {
+        const bars = body.querySelectorAll('.bar-fill');
+        if (bars.length) {
+            bars.forEach(el => el.style.height = '0px');
+            setTimeout(() => {
+                bars.forEach((el, i) => {
+                    const h = el.getAttribute('data-height');
+                    setTimeout(() => {
+                        el.style.height = `${h}px`;
+                    }, i * 50);
+                });
+            }, 50);
+        }
+    }
 }
+
 </script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -457,6 +482,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     fetchData(dropdown.value); // initial load
+
+    const sectionHeader = document.querySelector('.toggle-header');
+    const sectionBody = sectionHeader.nextElementSibling;
+    const icon = sectionHeader.querySelector('.icon');
+
+    sectionBody.classList.remove('open');
+    icon.textContent = '+';
     });
 </script>
 
