@@ -117,8 +117,10 @@ th {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    width: 30px;
+    flex: 1; 
+    max-width: 60px; 
     position: relative;
+    margin: 0 2px; 
 }
 
 .bar-fill {
@@ -440,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                let html = `<h4 style="margin-top: 1rem;">Team Picks for Week ${week}</h4>`;
+                let html = `<h4 style="margin-top: 1rem;">🧢 Team Picks for Week ${week}</h4>`;
                 html += '<div class="bar-chart">';
                 data.sort((a, b) => b.pick_count - a.pick_count);
 
