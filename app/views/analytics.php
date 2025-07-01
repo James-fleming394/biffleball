@@ -95,6 +95,7 @@ th {
     margin-top: 1rem;
     overflow-x: auto;
     padding-bottom: 1rem;
+    position: relative;
 }
 
 .bar-chart {
@@ -136,6 +137,54 @@ th {
     white-space: nowrap;
 }
 
+@media (max-width: 768px) {
+    .bar-chart {
+        gap: 6px;
+        height: 220px;
+        padding-left: 5px;
+    }
+
+    .bar {
+        width: 24px;
+    }
+
+    .bar-count,
+    .bar-label {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bar-chart {
+        gap: 4px;
+        height: 200px;
+    }
+
+    .bar {
+        width: 20px;
+    }
+
+    .bar-count,
+    .bar-label {
+        font-size: 0.55rem;
+    }
+}
+
+#bar-chart-container::after {
+    content: '→ scroll';
+    font-size: 0.7rem;
+    color: #888;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #bar-chart-container::after {
+        display: block;
+    }
+}
 
 
 .ending {
