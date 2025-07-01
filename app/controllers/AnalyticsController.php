@@ -37,4 +37,18 @@ class AnalyticsController {
     echo json_encode($data);
 }
 
+    public static function getWeeklyWinTotalsAjax() {
+        if (!isset($_GET['week'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing week']);
+            return;
+        }
+
+        $week = intval($_GET['week']);
+        $data = Analytics::getMLBWeeklyWinTotals($week);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
 }
