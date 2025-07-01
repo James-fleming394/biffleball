@@ -262,10 +262,38 @@ th {
         </div>
         <div class="toggle-body">
             <div class="scroll-table-wrapper">
-            <p>Coming soon...</p>
-            </div>
+            <table class="wide-scroll-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <?php for ($week = 1; $week <= 27; $week++): ?>
+                            <th>W<?php echo $week; ?></th>
+                        <?php endfor; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($teamsUsedData as $username => $picks): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($username); ?></td>
+                            <?php for ($week = 1; $week <= 27; $week++): ?>
+                                <td>
+                                    <?php
+                                    echo isset($picks[$week]) 
+                                        ? htmlspecialchars($picks[$week]) 
+                                        : '';
+                                    ?>
+                                </td>
+                            <?php endfor; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
         </div>
     </section>
+
+    
+    
     <div class=ending>
     </div>
 </div>
