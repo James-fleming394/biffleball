@@ -172,4 +172,36 @@ class Analytics {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getUserPicksByWeek() {
+        global $pdo;
+
+        $stmt = $pdo->query("
+            SELECT u.username, p.week, t.abbreviation AS team
+            FROM users u
+            LEFT JOIN picks p ON u.id = p.user_id
+            LEFT JOIN teams t ON p.team_id = t.id
+            ORDER BY u.username ASC, p.week ASC
+        ");
+
+        $raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Structure data: username => [ week => team_abbreviation ]
+        $data = [];
+        foreach ($raw as $row) {
+            $user = $row['username'];
+            $week = $row['week'];
+            $team = $row['team'];
+
+            if (!isset($data[$user])) {
+                $data[$user] = [];
+            }
+
+            if ($week !== null) {
+                $data[$user][intval($week)] = $team;
+            }
+        }
+
+        return $data;
+    }
+
 }
