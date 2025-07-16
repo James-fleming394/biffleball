@@ -100,6 +100,7 @@
     background-color: #0074D9;
     color: #fff;
     padding: 0.6rem 1.2rem;
+    margin-bottom: 1rem;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
@@ -108,6 +109,10 @@
 
 .pick-link:hover {
     background-color: #005fa3;
+}
+
+.pick-link-wrapper {
+    text-align: center;
 }
 
 .edit-profile-btn {
@@ -250,14 +255,18 @@
         </tbody>
     </table>
 
-    <a href="index.php?page=pick-team" class="pick-link">Make a Pick</a>
+    <div class="pick-link-wrapper">
+        <a href="index.php?page=pick-team" class="pick-link">Make a Pick</a>
+    </div>
 
     <div class="stats-summary">
-    <h3>📈 Stats Summary</h3>
-    <p><strong>Total Picks:</strong> <?php echo count($picks); ?></p>
-    <p><strong>Total Wins:</strong> <?php echo $user['total_wins'] ?? 0; ?></p>
-    <p><strong>Win %:</strong> <?php echo $user['win_percent'] ?? '0%'; ?></p>
-</div>
+        <h3>📈 Stats Summary</h3>
+            <p><strong>Current Win Streak:</strong> <?php echo $user['current_win_streak'] ?? 0; ?></p>
+            <p><strong>Longest Win Streak:</strong> <?php echo $user['longest_win_streak'] ?? 0; ?></p>
+            <p><strong>SOTU:</strong> <?php echo number_format($user['sotu'] ?? 0, 2); ?>%</p>
+            <p><strong>WAA:</strong> <?php echo number_format($user['waa'] ?? 0, 2); ?></p>
+            <p><strong>Years in League:</strong> <?php echo $user['seasons'] ?? 1; ?></p>
+    </div>
 
 </div>
 
