@@ -1,6 +1,18 @@
 <?php include 'header.php'; ?>
 
 <style>
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(0,116,217,0.1));
+    z-index: -1;
+}
+
+body {
+    background: linear-gradient(to bottom,rgb(112, 195, 255), #ffffff);
+}
+
 .profile-container {
     max-width: 800px;
     margin: 2rem auto;
@@ -191,6 +203,7 @@
 </style>
 
 <div class="profile-container">
+    <h2>👤 User Profile</h2>
     <div class="profile-header">
         <form action="upload_avatar.php" method="POST" enctype="multipart/form-data" class="avatar-form">
             <div class="avatar-container">
