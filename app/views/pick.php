@@ -463,29 +463,29 @@ button:hover {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const popup = document.getElementById('schedulePopup');
-    const closeBtn = document.querySelector('.close-schedule-popup');
+    document.addEventListener('DOMContentLoaded', () => {
+        const popup = document.getElementById('schedulePopup');
+        const closeBtn = document.querySelector('.close-schedule-popup');
 
-    document.querySelectorAll('.open-schedule-popup').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const teamName = e.target.dataset.team;
-            document.getElementById('schedulePopupTitle').textContent = `${teamName} - Full Season Schedule`;
-            popup.style.display = 'block';
+        document.querySelectorAll('.open-schedule-popup').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const teamName = e.target.dataset.team;
+                document.getElementById('schedulePopupTitle').textContent = `${teamName} - Full Season Schedule`;
+                popup.style.display = 'block';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+            }
         });
     });
-
-    closeBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            popup.style.display = 'none';
-        }
-    });
-});
 </script>
 
 
