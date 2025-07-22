@@ -62,6 +62,7 @@ h2 {
     padding: 1rem;
     display: none;
     animation: fadeIn 0.4s ease-in-out;
+    margin-bottom: 1rem;
 }
 
 .toggle-body.open {
@@ -81,6 +82,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 th, td {
