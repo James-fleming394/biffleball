@@ -1,6 +1,18 @@
 <?php include 'header.php'; ?>
 
 <style>
+.analytics-background {
+    background: repeating-linear-gradient(
+        45deg,
+        #f4f9ff,
+        #f4f9ff 10px,
+        #e9f2fc 10px,
+        #e9f2fc 20px
+    );
+    padding: 2rem 0;
+    min-height: 100vh;
+}
+
 .analytics-container {
     max-width: 90%;
     margin: 2rem auto;
@@ -32,6 +44,7 @@ h2 {
 }
 
 .scroll-table-wrapper {
+    background-color: white;
     max-height: 400px;
     overflow-y: auto;
     overflow-x: auto;
@@ -42,6 +55,7 @@ h2 {
 
 /* Sticky headers */
 .scroll-table-wrapper table thead th {
+    background-color: white;
     position: sticky;
     top: 0;
     background-color: #f4f4f4;
@@ -50,6 +64,7 @@ h2 {
 
 /* Ensure min-width for horizontal scrolling */
 .scroll-table-wrapper table {
+    background-color: white;
     min-width: 800px;
 }
 
@@ -59,6 +74,7 @@ h2 {
 }
 
 .toggle-body {
+    background-color:rgb(249, 249, 249);
     padding: 1rem;
     display: none;
     animation: fadeIn 0.4s ease-in-out;
@@ -79,6 +95,7 @@ section.open .toggle-body {
 }
 
 table {
+    background-color: white;
     border-collapse: collapse;
     width: 100%;
     margin-top: 1rem;
@@ -98,6 +115,7 @@ th {
 }
 
 #bar-chart-container {
+    background-color: white;
     margin-top: 1rem;
     overflow-x: auto;
     padding-bottom: 1rem;
@@ -202,7 +220,7 @@ th {
 }
 
 </style>
-
+<div class ="analytics-background">
 <h2 style="text-align:center; margin-top:2rem;">📊 Advanced Analytics</h2>
 
 <div class="analytics-container">
@@ -370,6 +388,7 @@ th {
     
     
     <div class=ending>
+    </div>
     </div>
 </div>
 
