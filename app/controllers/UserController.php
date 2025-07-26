@@ -51,24 +51,34 @@ class UserController {
     }
 
     public static function uploadAvatar() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
-            $uploadDir = __DIR__ . '/../uploads/avatars/';
-            $filename = uniqid('avatar_') . '_' . basename($_FILES['avatar']['name']);
-            $targetFile = $uploadDir . $filename;
-            $webPath = 'uploads/avatars/' . $filename;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
+        $baseDir = __DIR__ . '/../uploads/avatars/';
+        $userDir = $baseDir . $userId . '/';
 
-            if (!file_exists($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
+        // Create user-specific subdirectory if it doesn't exist
+        if (!file_exists($userDir)) {
+            mkdir($userDir, 0777, true);
+        }
 
-            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $targetFile)) {
-                User::updateAvatar($userId, $webPath);
-                header("Location: /index.php?page=profile");
-                exit();
-            } else {
-                echo "Avatar upload failed.";
-            }
+        $filename = uniqid('avatar_') . '_' . basename($_FILES['avatar']['name']);
+        $targetFile = $userDir . $filename;
+        $webPath = 'uploads/avatars/' . $userId . '/' . $filename;
+
+        // Optional: delete previous avatar if it exists
+        $currentAvatar = User::findById($userId)['avatar'] ?? '';
+        $oldAvatarPath = __DIR__ . '/../' . $currentAvatar;
+        if ($currentAvatar && file_exists($oldAvatarPath)) {
+            unlink($oldAvatarPath);
+        }
+
+        if (move_uploaded_file($_FILES['avatar']['tmp_name'], $targetFile)) {
+            User::updateAvatar($userId, $webPath);
+            header("Location: /index.php?page=profile");
+            exit();
+        } else {
+            echo "Avatar upload failed.";
+        }
         }
     }
 }
