@@ -36,19 +36,31 @@ switch ($page) {
         UserController::logout();
         break;
 
-    case 'upload-avatar':
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: /index.php?page=login");
-            exit();
-        }
-        UserController::uploadAvatar();
-        break;
-
     case 'profile':
         if (!isset($_SESSION['user_id'])) {
             header("Location: /index.php?page=login");
             exit();
         }
+
+        $user = User::findById($_SESSION['user_id']); // ← THIS must run AFTER upload
+        $picks = Pick::getUserPicks($_SESSION['user_id']);
+        include __DIR__ . '/views/profile.php';
+        break;
+
+
+    case 'profile':
+    case 'upload-avatar':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /index.php?page=login");
+            exit();
+        }
+
+        if ($page === 'upload-avatar') {
+            UserController::uploadAvatar();
+            // uploadAvatar handles redirect
+            exit();
+        }
+
         $user = User::findById($_SESSION['user_id']);
         $picks = Pick::getUserPicks($_SESSION['user_id']);
         include __DIR__ . '/views/profile.php';
@@ -57,7 +69,6 @@ switch ($page) {
     case 'standings':
         StandingsController::index();
         break;
-        
 
     case 'pick-team':
         if (!isset($_SESSION['user_id'])) {
@@ -84,11 +95,11 @@ switch ($page) {
     case 'update-wins':
         ApiController::updateTeamWins();
         break;
-    
+
     case 'home':
         HomeController::index();
         break;
-    
+
     case 'analytics':
         AnalyticsController::index();
         break;
@@ -101,10 +112,8 @@ switch ($page) {
         AnalyticsController::getWeeklyWinTotalsAjax();
         break;
 
-        
     default:
         include __DIR__ . '/views/home.php';
         break;
 }
 ?>
-

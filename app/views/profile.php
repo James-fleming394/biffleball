@@ -207,11 +207,15 @@ body {
     <div class="profile-header">
         <form action="index.php?page=upload-avatar" method="POST" enctype="multipart/form-data" class="avatar-form">
             <div class="avatar-container">
-                <img src="/images/avatars/<?php echo htmlspecialchars($user['avatar'] ?? 'default.png'); ?>" alt="User Avatar" class="avatar-img" id="avatarPreview">
+                <img src="/<?= htmlspecialchars($user['avatar'] ?? 'uploads/avatars/default.png') ?>?v=<?= time() ?>"
+                    alt="User Avatar"
+                    class="avatar-img"
+                    id="avatarPreview">
                 <div class="avatar-overlay">Change</div>
                 <input type="file" name="avatar" id="avatarInput" accept="image/*">
             </div>
         </form>
+
         <div class="user-details">
             <div class="view-mode">
             <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
@@ -231,8 +235,7 @@ body {
         <a href="#" onclick="toggleEditForm(event)">Cancel</a>
     </form>
 </div>
-
-    </div>
+</div>
 
     <?php
         // Compute leaderboard rank

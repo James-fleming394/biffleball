@@ -53,21 +53,20 @@ class UserController {
     public static function uploadAvatar() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && isset($_SESSION['user_id'])) {
         $userId = $_SESSION['user_id'];
-        $baseDir = __DIR__ . '/../uploads/avatars/';
-        $userDir = $baseDir . $userId . '/';
+        $uploadDir = realpath(__DIR__ . '/../../public/uploads/avatars') . '/' . $userId . '/';
+        $webPathBase = 'uploads/avatars/' . $userId . '/';
 
-        // Create user-specific subdirectory if it doesn't exist
-        if (!file_exists($userDir)) {
-            mkdir($userDir, 0777, true);
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
         }
 
         $filename = uniqid('avatar_') . '_' . basename($_FILES['avatar']['name']);
-        $targetFile = $userDir . $filename;
-        $webPath = 'uploads/avatars/' . $userId . '/' . $filename;
+        $targetFile = $uploadDir . $filename;
+        $webPath = $webPathBase . $filename;
 
-        // Optional: delete previous avatar if it exists
+        // Delete old avatar if it exists
         $currentAvatar = User::findById($userId)['avatar'] ?? '';
-        $oldAvatarPath = __DIR__ . '/../' . $currentAvatar;
+        $oldAvatarPath = realpath(__DIR__ . '/../../public/') . '/' . $currentAvatar;
         if ($currentAvatar && file_exists($oldAvatarPath)) {
             unlink($oldAvatarPath);
         }
@@ -79,8 +78,8 @@ class UserController {
         } else {
             echo "Avatar upload failed.";
         }
-        }
     }
+}
 }
 
 // Handle direct requests
