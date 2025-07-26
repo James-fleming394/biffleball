@@ -428,8 +428,7 @@
     }
 
     .belt-box img {
-        max-width: 220px;
-        margin-bottom: 15px;
+        max-width: 60%;
     }
 
     .belt-box h3 {
@@ -801,8 +800,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div id="newsletter-modal" class="newsletter-modal" onclick="toggleNewsletter(false)">
         <div class="newsletter-content" onclick="event.stopPropagation()">
         <span class="close-btn" onclick="toggleNewsletter(false)">✖</span>
-        <h3>This Week’s Update</h3>
-        <img src="https://media.discordapp.net/attachments/1090992614116954263/1382567168281149552/S5-Biffle-Week-12.jpg?ex=6852dfc3&is=68518e43&hm=d45c5f6dbd4c2cf3c7febc7d4616c2fe6be9de5d979b25943fd3c45023503a87&=&format=webp&width=458&height=648" alt="Weekly Newsletter" />
+        <img src="https://media.discordapp.net/attachments/1090992614116954263/1397958190565560391/S5-All-Star-Break-Odds.jpg?ex=68864085&is=6884ef05&hm=8a224f428aaba1132804b315503e9d2406285fac683b2cfcc3bd280b378ce7d2&=&format=webp&width=458&height=648" alt="Weekly Newsletter" />
         </div>
     </div>
 </section>
