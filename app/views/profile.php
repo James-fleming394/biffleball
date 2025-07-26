@@ -207,9 +207,9 @@ body {
     <div class="profile-header">
         <form action="index.php?page=upload-avatar" method="POST" enctype="multipart/form-data" class="avatar-form">
             <div class="avatar-container">
-                <img src="/<?= htmlspecialchars($user['avatar'] ?? 'uploads/avatars/default.png') ?>?v=<?= time() ?>"
-                    alt="User Avatar"
-                    class="avatar-img"
+                <img src="/<?= htmlspecialchars($user['avatar'] ?: 'uploads/avatars/default.png') ?>" 
+                    alt="User Avatar" 
+                    class="avatar-img" 
                     id="avatarPreview">
                 <div class="avatar-overlay">Change</div>
                 <input type="file" name="avatar" id="avatarInput" accept="image/*">
