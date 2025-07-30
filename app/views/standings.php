@@ -94,30 +94,31 @@
     <div class="standings-section">
         <h2>🏆 League Standings</h2>
 
-        <table class="standings-table">
+        <table class="standings-table" id="standingsTable">
             <thead>
                 <tr>
                     <th>Rank</th>
-                    <th>Username</th>
-                    <th>Total Wins</th>
-                    <th>WAA</th>
-                    <th>SOTU</th>
+                    <th class="sortable" data-key="username">Username</th>
+                    <th class="sortable" data-key="totalWins">Total Wins</th>
+                    <th class="sortable" data-key="waa">WAA</th>
+                    <th class="sortable" data-key="sotu">SOTU</th>
                     <th>Team This Week</th>
                     <th>Profile</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="standingsBody">
                 <?php 
                 $rank = 1;
                 foreach ($users as $user): 
                     $rowClass = $rank === 1 ? 'top1' : ($rank === 2 ? 'top2' : ($rank === 3 ? 'top3' : ''));
                 ?>
-                <tr class="<?php echo $rowClass; ?>">
-                    <td>
-                        <?php 
-                        echo $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : ($rank === 3 ? '🥉' : $rank));
-                        ?>
-                    </td>
+                <tr class="<?php echo $rowClass; ?>"
+                    data-username="<?php echo strtolower($user['username']); ?>"
+                    data-totalWins="<?php echo (int)$user['total_wins']; ?>"
+                    data-sotu="<?php echo (float)$user['sotu']; ?>"
+                    data-waa="<?php echo (float)$user['waa']; ?>"
+                >
+                    <td class="rank-cell"><?php echo $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : ($rank === 3 ? '🥉' : $rank)); ?></td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
                     <td><?php echo (int) $user['total_wins']; ?></td>
                     <td><?php echo number_format($user['waa'], 2); ?></td>
@@ -126,7 +127,6 @@
                         <?php
                         $team = $user['current_team'] ?? '';
                         if ($team) {
-                            // Remove city/state, convert to lowercase, remove spaces
                             $teamNameOnly = strtolower(preg_replace('/^(arizona|atlanta|baltimore|boston|chicago|cincinnati|cleveland|colorado|detroit|houston|kansas city|los angeles|miami|milwaukee|minnesota|new york|oakland|philadelphia|pittsburgh|san diego|san francisco|seattle|st\.? louis|tampa bay|texas|toronto|washington)\s+/i', '', $team));
                             $filename = str_replace(' ', '', $teamNameOnly) . '.png';
                             $logoPath = "/images/logos/" . $filename;
