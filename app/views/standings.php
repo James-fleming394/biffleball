@@ -77,6 +77,29 @@
     text-decoration: underline;
 }
 
+th.sortable {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+}
+th.sortable::after {
+    content: '⇅';
+    font-size: 0.8rem;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ccc;
+}
+th.sorted-asc::after {
+    content: '↑';
+    color: #fff;
+}
+th.sorted-desc::after {
+    content: '↓';
+    color: #fff;
+}
+
 @media (max-width: 768px) {
     .standings-section {
         padding: 1rem;
