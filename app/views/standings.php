@@ -171,4 +171,53 @@ th.sorted-desc::after {
     </div>
 </div>
 
+<script>
+document.querySelectorAll('th.sortable').forEach(header => {
+    header.addEventListener('click', () => {
+        const key = header.dataset.key;
+        const tbody = document.getElementById('standingsBody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        // Remove existing sort classes
+        document.querySelectorAll('th.sortable').forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+
+        const currentDirection = header.classList.contains('sorted-asc') ? 'asc' : (header.classList.contains('sorted-desc') ? 'desc' : null);
+        const newDirection = currentDirection === 'asc' ? 'desc' : 'asc';
+        header.classList.add(newDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
+
+        rows.sort((a, b) => {
+            let aVal = a.dataset[key];
+            let bVal = b.dataset[key];
+            if (!isNaN(aVal)) {
+                aVal = parseFloat(aVal);
+                bVal = parseFloat(bVal);
+            }
+            return newDirection === 'asc' ? (aVal > bVal ? 1 : -1) : (aVal < bVal ? 1 : -1);
+        });
+
+        // Update rank cells and trophy icons
+        rows.forEach((row, index) => {
+            const rankCell = row.querySelector('.rank-cell');
+            row.classList.remove('top1', 'top2', 'top3');
+
+            if (index === 0) {
+                rankCell.innerHTML = '🥇';
+                row.classList.add('top1');
+            } else if (index === 1) {
+                rankCell.innerHTML = '🥈';
+                row.classList.add('top2');
+            } else if (index === 2) {
+                rankCell.innerHTML = '🥉';
+                row.classList.add('top3');
+            } else {
+                rankCell.textContent = index + 1;
+            }
+        });
+
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
+    });
+});
+</script>
+
 <?php include 'footer.php'; ?>
